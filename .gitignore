@@ -1,0 +1,12 @@
+/__pycache__
+/.vscode
+/models/custom_models
+/models/yolo_models
+/output
+/predictions
+/train/images/train
+/train/images/val
+/train/labels/train
+/train/labels/val
+/train/labels/train.cache
+/train/labels/val.cache
