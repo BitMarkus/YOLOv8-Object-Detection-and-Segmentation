@@ -105,9 +105,15 @@ def check_float(var):
 # If they do not exist yet!
 def create_prg_folders():
     # https://kodify.net/python/pathlib-path-mkdir-method/
+    # Folder 'models'
+    Path(setting["pth_models"]).mkdir(parents=True, exist_ok=True)
+    Path(setting["pth_yolo_models"]).mkdir(parents=True, exist_ok=True)
     Path(setting["pth_custom_models"]).mkdir(parents=True, exist_ok=True)
+    # Folder 'output'
     Path(setting["pth_output"]).mkdir(parents=True, exist_ok=True)
+    # Folder 'predictions'
     Path(setting["pth_predictions"]).mkdir(parents=True, exist_ok=True)
+    # Folder for training images and labels
     Path(setting["pth_training_images"]).mkdir(parents=True, exist_ok=True)
     Path(setting["pth_validation_images"]).mkdir(parents=True, exist_ok=True)
     Path(setting["pth_training_labels"]).mkdir(parents=True, exist_ok=True)

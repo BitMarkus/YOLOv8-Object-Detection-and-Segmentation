@@ -7,6 +7,7 @@ setting = {
     #########
     # PATHS #
     #########
+    "pth_models": "models/",
     "pth_yolo_models": "models/yolo_models/",
     "pth_custom_models": "models/custom_models/",
     "pth_output": "output/",
