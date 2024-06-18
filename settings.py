@@ -22,8 +22,8 @@ setting = {
     # TRAINING #
     ############
     # https://docs.ultralytics.com/usage/cfg/#train-settings
-    "train_use_pretrained_model": True,
-    "train_model_size": "m",
+    "train_use_pretrained_model": False,
+    "train_model_size": "l",
     "train_model_prefix": "yolov8",
     "train_empty_model_extension": ".yaml",
     "train_pretrained_model_extension": ".pt",
@@ -48,14 +48,14 @@ setting = {
     "od_model_prefix": "yolov8",
     "od_pretrained_model_extension": ".pt",
     # Name of custom model
-    "od_custom_model_name": "cilia_3000e_m_best.pt",
+    "od_custom_model_name": "nuclei_1000e_x_best.pt", # cilia_3000e_m_best.pt
     # List of classes to detect, empy list = all classes
     "od_class_selection": [],
     # Defines the image size for inference
-    "od_inf_img_size_width": 1920,      # Webcam: 1920
-    "od_inf_img_size_height": 1088,     # Webcam: 1088
+    "od_inf_img_size_width": 1024,      # Webcam: 1920
+    "od_inf_img_size_height": 1024,     # Webcam: 1088
     # Limits the amount of detections on an image (default 300)
-    "od_max_detections": 500,
+    "od_max_detections": 1000,
     # Intersection Over Union (IoU) threshold: 
     # Lower values result in fewer detections by eliminating overlapping boxes, 
     # useful for reducing duplicates (default 0.7)
