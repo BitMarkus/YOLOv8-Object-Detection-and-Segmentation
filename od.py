@@ -1,5 +1,6 @@
 import cv2
 from ultralytics import YOLO
+from ultralytics.utils.plotting import Annotator, colors
 import supervision as sv
 # Own modules
 from settings import setting
@@ -17,7 +18,11 @@ class ObjectDetection:
         # Load model
         # Pretrained model
         if(self.use_pretrained_model):
-            self.model_name = f'{setting["od_model_prefix"]}{setting["od_pretrained_model_size"]}{setting["od_pretrained_model_extension"]}'
+            # Normal vs. segmentation model
+            if(setting["od_use_segmentation_model"]):
+                self.model_name = f'{setting["od_model_prefix"]}{setting["od_pretrained_model_size"]}{setting["od_segmentation_model_postfix"]}{setting["od_pretrained_model_extension"]}'
+            else:
+                self.model_name = f'{setting["od_model_prefix"]}{setting["od_pretrained_model_size"]}{setting["od_pretrained_model_extension"]}'
             # Model with path
             self.model_pth = f'{setting["pth_yolo_models"]}{self.model_name}'
         # Custom model
@@ -61,6 +66,11 @@ class ObjectDetection:
             text_thickness=setting["od_bbox_text_thickness"], 
             text_scale=setting["od_bbox_text_scale"]
         ) 
+        # Object for instance segmentation masks
+        # https://roboflow.com/how-to-plot/yolov8-segmentation
+        self.mask_annotator = sv.MaskAnnotator(
+            color=sv.Color.blue()
+        )
 
         # Class counter display
         self.show_class_counter = setting["od_show_class_counter"]
@@ -91,24 +101,37 @@ class ObjectDetection:
             max_det=self.max_detections,
             classes=self.od_class_list
         )
+        # print(results)
         return results 
     
-    def annotate_bboxes(self, result, img):
+    def annotate_bboxes(self, activate_object_detection, activate_object_segmentation, result, img):
         # Setup detections for visualization
-        detections = sv.Detections(
-            xyxy = result.boxes.xyxy.cpu().numpy(),
-            confidence = result.boxes.conf.cpu().numpy(),
-            class_id = result.boxes.cls.cpu().numpy().astype(int)
-        ) 
+        detections = sv.Detections.from_ultralytics(result)
+
         # Format custom labels
         self.labels = [f"{self.class_names[class_id]} {confidence:0.2f}"
             for _, _, confidence, class_id, _, _
             in detections]
         # Annotate frame
-        if(self.show_bbox):
+        # Bounding boxes
+        if(self.show_bbox and activate_object_detection):
             img = self.box_annotator.annotate(scene=img, detections=detections) # scene=frame.copy(),
+        # Labels
         if(self.show_labels):
             img = self.label_annotator.annotate(scene=img, detections=detections, labels=self.labels)
+        # Segmentation masks
+        if(activate_object_segmentation):
+            img = self.mask_annotator.annotate(scene=img, detections=detections)  
+            """
+            # Annotator showing outlines of masks
+            annotator = Annotator(img, line_width=2)
+            if result.masks is not None:
+                clss = result.boxes.cls.cpu().tolist()
+                masks = result.masks.xy
+                for mask, cls in zip(masks, clss):
+                    annotator.seg_bbox(mask=mask, mask_color=colors(int(cls), True), det_label=self.class_names[int(cls)])
+            """           
+        # Class counter
         if(self.show_class_counter):
             img = self.show_bbox_counter(result, img)
         return img 

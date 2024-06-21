@@ -23,7 +23,8 @@ def main():
         print("2) Object detection on Images")
         print("3) Object detection on Videos")
         print("4) Object counting/tracking on Videos")
-        print("5) Exit Program")
+        print("5) Object segmentation on Videos")
+        print("6) Exit Program")
         menu1 = int(fnc.input_int("Please choose: "))
 
         #################
@@ -76,11 +77,24 @@ def main():
             # Execute detection
             od_detect()  
 
+        ##############################
+        # Object Segmentation Videos #  
+        ############################## 
+
+        elif(menu1 == 5):      
+            print("\n:OBJECT SEGMENTATION ON VIDEOS:") 
+            # Create object detection object for videos
+            od_detect = ObjectDetectionVid('segm')
+            # Print model classes
+            od_detect.print_classes()
+            # Execute detection
+            od_detect()  
+
         ################
         # Exit Program #  
         ################      
 
-        elif(menu1 == 5):
+        elif(menu1 == 6):
             print("\nExit program...")
             break
         

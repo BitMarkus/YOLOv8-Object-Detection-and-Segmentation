@@ -23,12 +23,12 @@ setting = {
     ############
     # https://docs.ultralytics.com/usage/cfg/#train-settings
     "train_use_pretrained_model": False,
-    "train_model_size": "l",
+    "train_model_size": "m",
     "train_model_prefix": "yolov8",
     "train_empty_model_extension": ".yaml",
     "train_pretrained_model_extension": ".pt",
     "train_dataset_info_name": "dataset.yaml",
-    "train_num_epochs": 1000,
+    "train_num_epochs": 3000,
     "train_batch_size": 1,
     "train_patience": 0,
     "train_validation": True,
@@ -43,17 +43,19 @@ setting = {
     ####################
     # Use pretrained yolov8 model or custom/self trained model
     "od_use_pretrained_model": True,
+    "od_use_segmentation_model": True,
     # Standard model
-    "od_pretrained_model_size": "x",
+    "od_pretrained_model_size": "m",
     "od_model_prefix": "yolov8",
+    "od_segmentation_model_postfix": "-seg",
     "od_pretrained_model_extension": ".pt",
     # Name of custom model
-    "od_custom_model_name": "nuclei_1000e_x_best.pt", # cilia_3000e_m_best.pt
+    "od_custom_model_name": "yolov8x-seg.pt", # cilia_3000e_m_best.pt
     # List of classes to detect, empy list = all classes
     "od_class_selection": [],
     # Defines the image size for inference
-    "od_inf_img_size_width": 1024,      # Webcam: 1920
-    "od_inf_img_size_height": 1024,     # Webcam: 1088
+    "od_inf_img_size_width": 1920,      # Webcam: 1920
+    "od_inf_img_size_height": 1088,     # Webcam: 1088
     # Limits the amount of detections on an image (default 300)
     "od_max_detections": 1000,
     # Intersection Over Union (IoU) threshold: 
@@ -61,9 +63,9 @@ setting = {
     # useful for reducing duplicates (default 0.7)
     "od_iou": 0.7,
     # Sets the minimum confidence threshold for detections
-    "od_min_conf": 0.40,
+    "od_min_conf": 0.3,
     # Settings for bounding box annotations
-    "od_show_labels": True,
+    "od_show_labels":True,
     "od_show_bbox": True,
     "od_bbox_line_thickness": 1,
     "od_bbox_text_thickness": 1,
@@ -75,10 +77,13 @@ setting = {
 
     ### ON VIDEOS ###
     "od_show_output_video": True,
+    "od_save_output_video": True, 
+    "od_output_video_name": "object_detection",
     "od_video_source": 0,  # Webcam index ot path to video
     # Set width and hight of webcam image for display
-    "od_frame_width": 1920, # 640
-    "od_frame_height": 1080, # 480
+    "od_frame_width": 1920, # 1920
+    "od_frame_height": 1080, # 1080
+    "od_frame_fps": 15,
     # Result window
     "window_results_title": "YOLO Detection: Results",
     "window_results_x_pos": 100,
@@ -105,6 +110,10 @@ setting = {
     "oc_track_thickness": 2,
     "oc_view_in_counts": True,
     "oc_view_out_counts": True,
+
+    #######################
+    # OBJECT SEGMENTATION #
+    #######################
 
     #################
     # CLASS COUNTER #
