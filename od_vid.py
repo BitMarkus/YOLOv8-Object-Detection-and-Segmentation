@@ -34,6 +34,8 @@ class ObjectDetectionVid(ObjectDetection):
         self.fps_font_scale = setting["fps_font_scale"]
         self.fps_color = setting["fps_color"]
         self.fps_font_thickness = setting["fps_font_thickness"]
+        # Paths
+        self.pth_camshots = setting["pth_camshots"]
         # Object detection, counter/tracker or segmentation
         if(mode == 'detect'):
             self.activate_object_detection = True
@@ -89,6 +91,8 @@ class ObjectDetectionVid(ObjectDetection):
         # For the first frame, the result window is positioned
         # Or else it appears randomly all over the screen
         first_frame = True
+        # Image conter (for webcam screenshot savings)
+        img_counter = 0
 
         while True:
             # Start fps counter
@@ -126,9 +130,19 @@ class ObjectDetectionVid(ObjectDetection):
             # Set first frame to false
             first_frame = False
             
+            # Keypress actions:
+            k = cv2.waitKey(1)
             # Press ESC to end program
-            if cv2.waitKey(5) & 0xFF == 27:
+            if(k%256 == 27):
+                print("Esc was pressed. Closing application!")  # if cv2.waitKey(5) & 0xFF == 27:
                 break
+            # Press s key to save frame
+            elif(k%256 == ord('s')):
+                img_name = f'{self.pth_camshots}camshot_frame_{img_counter}.png'
+                cv2.imwrite(img_name, frame)
+                print(f'Camshot {img_name} successfully saved!')
+                img_counter += 1
+
 
         if(self.save_output_video):
             out.release()

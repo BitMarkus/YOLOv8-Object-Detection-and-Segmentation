@@ -113,6 +113,8 @@ def create_prg_folders():
     Path(setting["pth_output"]).mkdir(parents=True, exist_ok=True)
     # Folder 'predictions'
     Path(setting["pth_predictions"]).mkdir(parents=True, exist_ok=True)
+    # Folder for webcam screenshots
+    Path(setting["pth_camshots"]).mkdir(parents=True, exist_ok=True)
     # Folder for training images and labels
     Path(setting["pth_training_images"]).mkdir(parents=True, exist_ok=True)
     Path(setting["pth_validation_images"]).mkdir(parents=True, exist_ok=True)
