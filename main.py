@@ -48,14 +48,6 @@ def main():
             print("\n:OBJECT DETECTION ON IMAGES:") 
             od_img = ImageOD()
             od_img()
-            """
-            # Create object detection object for images
-            od_detect = ObjectDetectionImg()
-            # Print model classes
-            od_detect.print_classes()
-            # Start object detection
-            od_detect()   
-            """ 
 
         ###########################
         # Object Detection Videos #  
@@ -65,14 +57,7 @@ def main():
             print("\n:OBJECT DETECTION ON VIDEOS:") 
             od_video = VideoOD()
             od_video()
-            """
-            # Create object datection object for videos
-            od_detect = ObjectDetectionVid('detect')
-            # Print model classes
-            od_detect.print_classes()
-            # Execute detection
-            od_detect()  
-            """
+
         ##################################
         # Object Cunting/Tracking Videos #  
         ##################################       

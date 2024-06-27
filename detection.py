@@ -67,6 +67,7 @@ class Detect():
     def annotate_bboxes(self, result, img):
         # Read detections from image/frame
         detections = sv.Detections.from_ultralytics(result)
+        
         # Format custom labels
         self.labels = [f"{self.class_names[class_id]} {confidence:0.2f}"
             for _, _, confidence, class_id, _, _

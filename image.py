@@ -6,6 +6,7 @@ import cv2
 from PIL import Image
 import os
 # Own modules
+from detection import Detect
 from settings import setting
 
 class ImageOD():
@@ -26,6 +27,12 @@ class ImageOD():
         self.window_results_title = setting["window_results_title"]
         self.window_results_x_pos = setting["window_results_x_pos"]
         self.window_results_y_pos = setting["window_results_y_pos"] 
+        # Modes
+        # Object detection
+        self.activate_object_detection = True #######################################################################################################
+        # Instantiate a object detection object
+        if(self.activate_object_detection):
+            self.detection = Detect()
 
     #############################################################################################################
     # METHODS:
@@ -48,35 +55,42 @@ class ImageOD():
         img.save(output_pth)
         print(f'Image {name} was saved to folder {pth_output}.')
 
+    # Displays the (predicted) image
+    def show_image(self, img):
+        cv2.namedWindow(self.window_results_title)
+        cv2.moveWindow(self.window_results_title, self.window_results_x_pos, self.window_results_y_pos)
+        cv2.imshow(self.window_results_title, img)
+        # Close image window by pressing any key
+        cv2.waitKey(0) 
+        # closing all open windows
+        cv2.destroyAllWindows()         
+
     #############################################################################################################
     # CALL:
 
     def __call__(self):
         # Load images in prediction folder
         images = self.get_img_list(self.pth_predictions)
+
         # If there are any images in the folder
         if(len(images) > 0):
-            # Show images
-            if(self.show_pred_images):
-                # Iterate over images
-                for image_name in images:
-                    # Load image
-                    img = self.load_image(image_name, self.pth_predictions)
 
-                    # Show image
-                    cv2.namedWindow(self.window_results_title)
-                    cv2.moveWindow(self.window_results_title, self.window_results_x_pos, self.window_results_y_pos)
-                    cv2.imshow(self.window_results_title, img)
+            # Iterate over images
+            for image_name in images:
+                # Load image
+                img = self.load_image(image_name, self.pth_predictions)
 
-                    # Close image window by pressing any key
-                    cv2.waitKey(0) 
-                    # closing all open windows
-                    cv2.destroyAllWindows() 
+                # OBJECT DETECTION #
+                # Predict and draw bounding boxes for object detection
+                if(self.activate_object_detection):
+                    img = self.detection(img)
 
-            # Save all images
-            if(self.save_pred_images):
-                # Iterate over images
-                for image_name in images:
+                # Show image
+                if(self.show_pred_images):
+                    self.show_image(img)
+
+                # Save image
+                if(self.save_pred_images):
                     self.save_image(img, image_name, self.pth_image_output)
 
         # If there are no images in the prediction folder      

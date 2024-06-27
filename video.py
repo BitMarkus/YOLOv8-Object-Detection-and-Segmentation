@@ -49,6 +49,9 @@ class VideoOD():
         # Modes
         # Object detection
         self.activate_object_detection = True #######################################################################################################
+        # Instantiate a object detection object
+        if(self.activate_object_detection):
+            self.detection = Detect()
 
     #############################################################################################################
     # METHODS:
@@ -77,10 +80,6 @@ class VideoOD():
     # CALL:
 
     def __call__(self):
-
-        # Instantiate a object detection object
-        if(self.activate_object_detection):
-            detection = Detect()
 
         # Capture video
         cap = cv2.VideoCapture(self.source)
@@ -114,18 +113,19 @@ class VideoOD():
             ret, frame = cap.read()
             assert ret
 
+            # OBJECT DETECTION #
             # Predict and draw bounding boxes for object detection
             if(self.activate_object_detection):
-                detection(frame)
+                frame = self.detection(frame)
+
+            # Save output video
+            if(self.save_output_video):
+                out.write(frame)
 
             # End fps counter and show fps in left upper corner
             if(self.show_fps_display):
                 end_time = time()
                 self.fps_display(frame, start_time, end_time)
-
-            # Save output video
-            if(self.save_output_video):
-                out.write(frame)
 
             # Show frame with cv2
             if(self.show_output_video):
