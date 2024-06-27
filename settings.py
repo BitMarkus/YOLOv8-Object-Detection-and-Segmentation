@@ -121,6 +121,11 @@ setting = {
     # OBJECT SEGMENTATION #
     #######################
 
+    "os_show_mask": True,
+    "os_show_outline": True,
+    "os_outline_thickness": 1, # DOES NOTHING!?!
+    "os_outline_color": (255, 0, 0), # blue
+
     #################
     # CLASS COUNTER #
     #################
