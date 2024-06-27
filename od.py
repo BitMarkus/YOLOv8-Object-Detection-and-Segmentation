@@ -1,6 +1,5 @@
 import cv2
 from ultralytics import YOLO
-from ultralytics.utils.plotting import Annotator, colors
 import supervision as sv
 # Own modules
 from settings import setting

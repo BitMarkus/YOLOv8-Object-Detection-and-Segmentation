@@ -5,6 +5,8 @@ from od_vid import ObjectDetectionVid
 from train import Train 
 import functions as fnc
 from settings import setting
+from video import VideoOD
+from image import ImageOD
 
 def main():
 
@@ -44,12 +46,16 @@ def main():
 
         elif(menu1 == 2):      
             print("\n:OBJECT DETECTION ON IMAGES:") 
+            od_img = ImageOD()
+            od_img()
+            """
             # Create object detection object for images
             od_detect = ObjectDetectionImg()
             # Print model classes
             od_detect.print_classes()
             # Start object detection
-            od_detect()    
+            od_detect()   
+            """ 
 
         ###########################
         # Object Detection Videos #  
@@ -57,13 +63,16 @@ def main():
 
         elif(menu1 == 3):      
             print("\n:OBJECT DETECTION ON VIDEOS:") 
+            od_video = VideoOD()
+            od_video()
+            """
             # Create object datection object for videos
             od_detect = ObjectDetectionVid('detect')
             # Print model classes
             od_detect.print_classes()
             # Execute detection
             od_detect()  
-    
+            """
         ##################################
         # Object Cunting/Tracking Videos #  
         ##################################       

@@ -113,8 +113,8 @@ def create_prg_folders():
     Path(setting["pth_output"]).mkdir(parents=True, exist_ok=True)
     # Folder 'predictions'
     Path(setting["pth_predictions"]).mkdir(parents=True, exist_ok=True)
-    # Folder for webcam screenshots
-    Path(setting["pth_camshots"]).mkdir(parents=True, exist_ok=True)
+    # Folder for video frame recordings
+    Path(setting["pth_video_frames"]).mkdir(parents=True, exist_ok=True)
     # Folder for training images and labels
     Path(setting["pth_training_images"]).mkdir(parents=True, exist_ok=True)
     Path(setting["pth_validation_images"]).mkdir(parents=True, exist_ok=True)
@@ -145,3 +145,16 @@ def exit_menu(var, stop = "<exit>"):
 # Prints a message to exit a menue with <exit>
 def exit_menu_msg(stop = "<exit>"):
     print(f"> Enter {stop} to return to menue")
+
+# Annotate images or video frames with text
+def annotate_text(img, text, pos, font_scale, font_color, font_thickness):
+    cv2.putText(
+        img, 
+        text, 
+        (pos[0], pos[1]), 
+        cv2.FONT_HERSHEY_SIMPLEX, 
+        fontScale=font_scale, 
+        color=font_color, 
+        thickness=font_thickness,
+        lineType=cv2.LINE_AA,
+    )

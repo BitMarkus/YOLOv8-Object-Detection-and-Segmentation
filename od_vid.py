@@ -35,7 +35,7 @@ class ObjectDetectionVid(ObjectDetection):
         self.fps_color = setting["fps_color"]
         self.fps_font_thickness = setting["fps_font_thickness"]
         # Paths
-        self.pth_camshots = setting["pth_camshots"]
+        self.pth_video_frames = setting["pth_video_frames"]
         # Object detection, counter/tracker or segmentation
         if(mode == 'detect'):
             self.activate_object_detection = True
@@ -138,7 +138,7 @@ class ObjectDetectionVid(ObjectDetection):
                 break
             # Press s key to save frame
             elif(k%256 == ord('s')):
-                img_name = f'{self.pth_camshots}camshot_frame_{img_counter}.png'
+                img_name = f'{self.pth_video_frames}camshot_frame_{img_counter}.png'
                 cv2.imwrite(img_name, frame)
                 print(f'Camshot {img_name} successfully saved!')
                 img_counter += 1

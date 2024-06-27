@@ -12,7 +12,7 @@ setting = {
     "pth_custom_models": "models/custom_models/",
     "pth_output": "output/",
     "pth_predictions": "predictions/",
-    "pth_camshots": "camshots/",
+    "pth_video_frames": "output/vidshot/",
     "pth_dataset_info": "train/",
     "pth_training_images": "train/images/train/",
     "pth_validation_images": "train/images/val/",
@@ -78,13 +78,18 @@ setting = {
 
     ### ON VIDEOS ###
     "od_show_output_video": True,
-    "od_save_output_video": False, 
+    "od_save_output_video": True, 
     "od_output_video_name": "object_detection",
     "od_video_source": 0,  # Webcam index ot path to video
     # Set width and hight of webcam image for display
     "od_frame_width": 1920, # 1920
     "od_frame_height": 1080, # 1080
     "od_frame_fps": 15,
+    # File name for saved frames
+    "od_saved_video_frame_prefix": "video_frame_",
+    "od_saved_video_frame_extension": ".png",
+
+    ## FOR VIDEOS AND IMAGES ###
     # Result window
     "window_results_title": "YOLO Detection: Results",
     "window_results_x_pos": 100,
