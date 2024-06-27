@@ -73,7 +73,7 @@ class ImageOD():
                     # closing all open windows
                     cv2.destroyAllWindows() 
 
-            # Save images
+            # Save all images
             if(self.save_pred_images):
                 # Iterate over images
                 for image_name in images:
