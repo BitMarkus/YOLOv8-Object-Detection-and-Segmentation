@@ -6,6 +6,7 @@ import cv2
 import numpy as np
 from time import time
 # Own modules
+from detection import Detect
 from settings import setting
 import functions as fcn
 
@@ -45,6 +46,9 @@ class VideoOD():
         self.fps_font_scale = setting["fps_font_scale"]
         self.fps_color = setting["fps_color"]
         self.fps_font_thickness = setting["fps_font_thickness"]
+        # Modes
+        # Object detection
+        self.activate_object_detection = True #######################################################################################################
 
     #############################################################################################################
     # METHODS:
@@ -73,6 +77,10 @@ class VideoOD():
     # CALL:
 
     def __call__(self):
+
+        # Instantiate a object detection object
+        if(self.activate_object_detection):
+            detection = Detect()
 
         # Capture video
         cap = cv2.VideoCapture(self.source)
@@ -105,6 +113,10 @@ class VideoOD():
             # Read frame
             ret, frame = cap.read()
             assert ret
+
+            # Predict and draw bounding boxes for object detection
+            if(self.activate_object_detection):
+                detection(frame)
 
             # End fps counter and show fps in left upper corner
             if(self.show_fps_display):

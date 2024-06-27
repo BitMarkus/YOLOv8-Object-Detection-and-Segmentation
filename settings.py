@@ -78,7 +78,7 @@ setting = {
 
     ### ON VIDEOS ###
     "od_show_output_video": True,
-    "od_save_output_video": True, 
+    "od_save_output_video": False, 
     "od_output_video_name": "object_detection",
     "od_video_source": 0,  # Webcam index ot path to video
     # Set width and hight of webcam image for display
