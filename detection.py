@@ -64,10 +64,11 @@ class Detect():
         )
         return results 
     
-    def annotate_bboxes(self, result, img):
-        # Read detections from image/frame
-        detections = sv.Detections.from_ultralytics(result)
-        
+    # Read detections from image/frame
+    def read_detections(self, result):
+        return sv.Detections.from_ultralytics(result)
+    
+    def annotate_bboxes(self, img, detections):
         # Format custom labels
         self.labels = [f"{self.class_names[class_id]} {confidence:0.2f}"
             for _, _, confidence, class_id, _, _
@@ -88,7 +89,9 @@ class Detect():
     def __call__(self, img):
         # Predict objects in image/frame
         results = self.predict(img)  
+        # Read detections from image/frame
+        detections = self.read_detections(results[0])
         # Draw bounding boxes with labels
-        img = self.annotate_bboxes(results[0], img)   
+        img = self.annotate_bboxes(img, detections)   
 
         return img 

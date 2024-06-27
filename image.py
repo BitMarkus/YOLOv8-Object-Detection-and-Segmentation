@@ -7,6 +7,7 @@ from PIL import Image
 import os
 # Own modules
 from detection import Detect
+from segmentation import Segment
 from settings import setting
 
 class ImageOD():
@@ -29,10 +30,14 @@ class ImageOD():
         self.window_results_y_pos = setting["window_results_y_pos"] 
         # Modes
         # Object detection
-        self.activate_object_detection = True #######################################################################################################
+        self.activate_object_detection = False #######################################################################################################
         # Instantiate a object detection object
         if(self.activate_object_detection):
             self.detection = Detect()
+        # Object segmentation
+        self.activate_object_segmentation = True #######################################################################################################
+        if(self.activate_object_segmentation):
+            self.segmentation = Segment()        
 
     #############################################################################################################
     # METHODS:
@@ -81,9 +86,12 @@ class ImageOD():
                 img = self.load_image(image_name, self.pth_predictions)
 
                 # OBJECT DETECTION #
-                # Predict and draw bounding boxes for object detection
                 if(self.activate_object_detection):
                     img = self.detection(img)
+
+                # OBJECT SEGMENTATION #
+                if(self.activate_object_segmentation):
+                    img = self.segmentation(img)
 
                 # Show image
                 if(self.show_pred_images):

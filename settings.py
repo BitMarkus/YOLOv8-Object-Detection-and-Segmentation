@@ -43,20 +43,20 @@ setting = {
     # OBJECT DETECTION #
     ####################
     # Use pretrained yolov8 model or custom/self trained model
-    "od_use_pretrained_model": False,
-    "od_use_segmentation_model": False,
+    "od_use_pretrained_model": True,
+    "od_use_segmentation_model": True,
     # Standard model
     "od_pretrained_model_size": "m",
     "od_model_prefix": "yolov8",
     "od_segmentation_model_postfix": "-seg",
     "od_pretrained_model_extension": ".pt",
     # Name of custom model
-    "od_custom_model_name": "nuclei_3000e_m_best.pt", # cilia_3000e_m_best.pt, yolov8x-seg.pt
+    "od_custom_model_name": "yolov8x-seg.pt", # cilia_3000e_m_best.pt, yolov8x-seg.pt, nuclei_3000e_m_best.pt
     # List of classes to detect, empy list = all classes
     "od_class_selection": [],
     # Defines the image size for inference
-    "od_inf_img_size_width": 1024,      # Webcam: 1920
-    "od_inf_img_size_height": 1024,     # Webcam: 1088
+    "od_inf_img_size_width": 1920,      # Webcam: 1920
+    "od_inf_img_size_height": 1088,     # Webcam: 1088
     # Limits the amount of detections on an image (default 300)
     "od_max_detections": 500,
     # Intersection Over Union (IoU) threshold: 
@@ -66,7 +66,7 @@ setting = {
     # Sets the minimum confidence threshold for detections
     "od_min_conf": 0.3,
     # Settings for bounding box annotations
-    "od_show_labels": False,
+    "od_show_labels": True,
     "od_show_bbox": True,
     "od_bbox_line_thickness": 1,
     "od_bbox_text_thickness": 1,

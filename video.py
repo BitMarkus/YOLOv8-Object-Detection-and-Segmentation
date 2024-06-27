@@ -7,6 +7,7 @@ import numpy as np
 from time import time
 # Own modules
 from detection import Detect
+from segmentation import Segment
 from settings import setting
 import functions as fcn
 
@@ -46,12 +47,17 @@ class VideoOD():
         self.fps_font_scale = setting["fps_font_scale"]
         self.fps_color = setting["fps_color"]
         self.fps_font_thickness = setting["fps_font_thickness"]
+
         # Modes
         # Object detection
-        self.activate_object_detection = True #######################################################################################################
+        self.activate_object_detection = False #######################################################################################################
         # Instantiate a object detection object
         if(self.activate_object_detection):
             self.detection = Detect()
+        # Object segmentation
+        self.activate_object_segmentation = True #######################################################################################################
+        if(self.activate_object_segmentation):
+            self.segmentation = Segment()        
 
     #############################################################################################################
     # METHODS:
@@ -114,9 +120,12 @@ class VideoOD():
             assert ret
 
             # OBJECT DETECTION #
-            # Predict and draw bounding boxes for object detection
             if(self.activate_object_detection):
                 frame = self.detection(frame)
+
+            # OBJECT SEGMENTATION #
+            if(self.activate_object_segmentation):
+                frame = self.segmentation(frame)
 
             # Save output video
             if(self.save_output_video):
