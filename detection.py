@@ -4,6 +4,7 @@
 
 import supervision as sv
 # Own modules
+from counter import Count
 from model import ModelOD
 from settings import setting
 
@@ -32,6 +33,11 @@ class Detect():
         self.max_detections = setting["od_max_detections"]  
         # Intersection Over Union (IoU) threshold
         self.iou = setting["od_iou"]  
+
+        # Class counter object
+        self.show_class_counter = setting["od_show_class_counter"]
+        if(self.show_class_counter):
+            self.class_counter = Count()
 
         # Annotations
         self.show_labels = setting["od_show_labels"]
@@ -89,9 +95,15 @@ class Detect():
     def __call__(self, img):
         # Predict objects in image/frame
         results = self.predict(img)  
+
         # Read detections from image/frame
         detections = self.read_detections(results[0])
+
         # Draw bounding boxes with labels
-        img = self.annotate_bboxes(img, detections)   
+        img = self.annotate_bboxes(img, detections)  
+         
+        # Show class counter
+        if(self.show_class_counter):
+            img = self.class_counter(results[0], img, self.class_names)
 
         return img 

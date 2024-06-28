@@ -8,6 +8,7 @@ from time import time
 # Own modules
 from detection import Detect
 from segmentation import Segment
+from tracking import Track
 from settings import setting
 import functions as fcn
 
@@ -16,7 +17,24 @@ class VideoOD():
     #############################################################################################################
     # CONSTRUCTOR:
     
-    def __init__(self):
+    def __init__(self, mode):
+        # Modes for object detection on videos:
+        # 1) 'detect': Object detection with bounding boxes
+        # 2) 'segment': Instance segmentation with masks (can also include bounding boxes)
+        # 3) 'track': Object tracking and counting 
+        if(mode == 'detect'):
+            self.activate_object_detection = True
+            self.activate_object_segmentation = False
+            self.activate_object_tracking = False        
+        elif(mode == 'segment'):
+            self.activate_object_detection = False
+            self.activate_object_segmentation = True 
+            self.activate_object_tracking = False 
+        elif(mode == 'track'):
+            self.activate_object_detection = False
+            self.activate_object_segmentation = False
+            self.activate_object_tracking = True
+
         # Source: Webcam (0) or path to video file
         self.source = setting["od_video_source"]  
         # Show output video with cv2
@@ -50,14 +68,14 @@ class VideoOD():
 
         # Modes
         # Object detection
-        self.activate_object_detection = False #######################################################################################################
-        # Instantiate a object detection object
         if(self.activate_object_detection):
             self.detection = Detect()
         # Object segmentation
-        self.activate_object_segmentation = True #######################################################################################################
         if(self.activate_object_segmentation):
-            self.segmentation = Segment()        
+            self.segmentation = Segment() 
+        # Object tracking
+        if(self.activate_object_tracking):
+            self.tracker = Track()       
 
     #############################################################################################################
     # METHODS:
@@ -126,6 +144,10 @@ class VideoOD():
             # OBJECT SEGMENTATION #
             if(self.activate_object_segmentation):
                 frame = self.segmentation(frame)
+
+            # OBJECT TRACKING #
+            if(self.activate_object_tracking):
+                frame = self.tracker(frame)
 
             # Save output video
             if(self.save_output_video):

@@ -5,6 +5,7 @@
 from ultralytics.utils.plotting import Annotator, colors
 import supervision as sv
 # Own modules
+from counter import Count
 from detection import Detect
 from settings import setting
 
@@ -20,7 +21,12 @@ class Segment(Detect):
         self.show_show_mask = setting["os_show_mask"]  
         self.show_outline = setting["os_show_outline"]  
         self.outline_thickness = setting["os_outline_thickness"]  
-        self.outline_color = setting["os_outline_color"]  
+        self.outline_color = setting["os_outline_color"] 
+
+        # Class counter object
+        self.show_class_counter = setting["od_show_class_counter"]
+        if(self.show_class_counter):
+            self.class_counter = Count() 
 
         # Object for instance segmentation masks
         # https://roboflow.com/how-to-plot/yolov8-segmentation
@@ -40,7 +46,7 @@ class Segment(Detect):
             for mask in masks:
                 annotator.seg_bbox(
                     mask=mask, 
-                    mask_color=self.outline_color, 
+                    mask_color=self.outline_color, # DOES NOTHING!
                     det_label=None
                 )  
         return img     
@@ -64,5 +70,9 @@ class Segment(Detect):
 
         # Draw bounding boxes with labels
         img = self.annotate_bboxes(img, detections)   
+
+        # Show class counter
+        if(self.show_class_counter):
+            img = self.class_counter(results[0], img, self.class_names)
 
         return img 

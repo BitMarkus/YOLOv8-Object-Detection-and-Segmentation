@@ -49,7 +49,19 @@ def input_threshold(prompt):
                 if(thr <= 0 or thr >= 1):
                     print("Threshold value must be > 0 and < 1! Try again:")
                 else:
-                    return thr    
+                    return thr   
+
+# Function to exit any menue
+def exit_menu(var, stop = "<exit>"):
+    if(var == stop):
+        print("Input canceled!")
+        return True
+    else:
+        return False
+    
+# Prints a message to exit a menue with <exit>
+def exit_menu_msg(stop = "<exit>"):
+    print(f"> Enter {stop} to return to menue") 
 
 ####################################        
 # Functions to check variable type #
@@ -133,18 +145,6 @@ def show_cuda_and_versions():
         print("Ultralytics YOLO:", ultralytics.__version__)
         print("Supervision:", supervision.__version__)
         print("Opencv:", cv2.__version__)
-
-# Function to exit any menue
-def exit_menu(var, stop = "<exit>"):
-    if(var == stop):
-        print("Input canceled!")
-        return True
-    else:
-        return False
-    
-# Prints a message to exit a menue with <exit>
-def exit_menu_msg(stop = "<exit>"):
-    print(f"> Enter {stop} to return to menue")
 
 # Annotate images or video frames with text
 def annotate_text(img, text, pos, font_scale, font_color, font_thickness):

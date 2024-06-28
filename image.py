@@ -15,7 +15,19 @@ class ImageOD():
     #############################################################################################################
     # CONSTRUCTOR:
     
-    def __init__(self):
+    def __init__(self, mode):
+        # Modes for object detection on images:
+        # 1) 'detect': Object detection with bounding boxes
+        # 2) 'segment': Instance segmentation with masks (can also include bounding boxes)
+        if(mode == 'detect'):
+            self.activate_object_detection = True
+            self.activate_object_segmentation = False
+            self.activate_object_tracking = False        
+        elif(mode == 'segment'):
+            self.activate_object_detection = False
+            self.activate_object_segmentation = True 
+            self.activate_object_tracking = False         
+
         # Path for images to predict
         self.pth_predictions = setting["pth_predictions"]
         # Output path for saved images
@@ -28,14 +40,12 @@ class ImageOD():
         self.window_results_title = setting["window_results_title"]
         self.window_results_x_pos = setting["window_results_x_pos"]
         self.window_results_y_pos = setting["window_results_y_pos"] 
+
         # Modes
         # Object detection
-        self.activate_object_detection = False #######################################################################################################
-        # Instantiate a object detection object
         if(self.activate_object_detection):
             self.detection = Detect()
         # Object segmentation
-        self.activate_object_segmentation = True #######################################################################################################
         if(self.activate_object_segmentation):
             self.segmentation = Segment()        
 
