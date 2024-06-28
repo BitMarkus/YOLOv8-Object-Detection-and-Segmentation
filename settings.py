@@ -4,30 +4,12 @@
 ####################
 
 setting = {
-    #########
-    # PATHS #
-    #########
-    "pth_models": "models/",
-    "pth_yolo_models": "models/yolo_models/",
-    "pth_custom_models": "models/custom_models/",
-    "pth_output": "output/",
-    "pth_predictions": "predictions/",
-    "pth_video_frames": "output/vidshot/",
-    "pth_dataset_info": "train/",
-    "pth_training_images": "train/images/train/",
-    "pth_validation_images": "train/images/val/",
-    "pth_training_labels": "train/labels/train/",
-    "pth_validation_labels": "train/labels/val/",
-
     ############
     # TRAINING #
     ############
     # https://docs.ultralytics.com/usage/cfg/#train-settings
     "train_use_pretrained_model": False,
     "train_model_size": "m",
-    "train_model_prefix": "yolov8",
-    "train_empty_model_extension": ".yaml",
-    "train_pretrained_model_extension": ".pt",
     "train_dataset_info_name": "dataset.yaml",
     "train_num_epochs": 3000,
     "train_batch_size": 1,
@@ -47,16 +29,10 @@ setting = {
     "od_use_segmentation_model": True,
     # Standard model
     "od_pretrained_model_size": "m",
-    "od_model_prefix": "yolov8",
-    "od_segmentation_model_postfix": "-seg",
-    "od_pretrained_model_extension": ".pt",
     # Name of custom model
-    "od_custom_model_name": "yolov8x-seg.pt", # cilia_3000e_m_best.pt, yolov8x-seg.pt, nuclei_3000e_m_best.pt
+    "od_custom_model_name": "nuclei_3000e_m_best.pt", # cilia_3000e_m_best.pt, nuclei_3000e_m_best.pt
     # List of classes to detect, empy list = all classes
     "od_class_selection": [],
-    # Defines the image size for inference
-    "od_inf_img_size_width": 1920,      # Webcam: 1920
-    "od_inf_img_size_height": 1088,     # Webcam: 1088
     # Limits the amount of detections on an image (default 300)
     "od_max_detections": 500,
     # Intersection Over Union (IoU) threshold: 
@@ -72,11 +48,13 @@ setting = {
     "od_bbox_text_thickness": 1,
     "od_bbox_text_scale": 0.4,
 
-    ### ON IMAGES ###
+    ### FOR IMAGES ###
     "od_show_predicted_images": False,  
-    "od_save_predicted_images": True,  
+    "od_save_predicted_images": True, 
+    # Defines the image size for inference for images (w, h)
+    "od_inf_size_img": (1024, 1024),
 
-    ### ON VIDEOS ###
+    ### FOR VIDEOS ###
     "od_show_output_video": True,
     "od_save_output_video": False, 
     "od_output_video_name": "object_detection",
@@ -88,6 +66,8 @@ setting = {
     # File name for saved frames
     "od_saved_video_frame_prefix": "video_frame_",
     "od_saved_video_frame_extension": ".png",
+    # Defines the image size for inference for videos (w, h)
+    "od_inf_size_vid": (1920, 1088),
 
     ## FOR VIDEOS AND IMAGES ###
     # Result window
@@ -95,9 +75,17 @@ setting = {
     "window_results_x_pos": 100,
     "window_results_y_pos": 100,
 
-    ####################################
-    # OBJECT COUNTING/TRACKING (VIDEO) #
-    ####################################
+    #######################
+    # OBJECT SEGMENTATION #
+    #######################
+    "os_show_mask": True,
+    "os_show_outline": True,
+    "os_outline_thickness": 1, # DOES NOTHING!?!
+    "os_outline_color": (255, 0, 0), # blue
+
+    ###########################
+    # OBJECT TRACKING (VIDEO) #
+    ###########################
     # https://docs.ultralytics.com/guides/object-counting/#argument-objectcounter  
     # Region points for object counting
     "oc_roi_start": (10, 10),
@@ -116,15 +104,6 @@ setting = {
     "oc_track_thickness": 2,
     "oc_view_in_counts": True,
     "oc_view_out_counts": True,
-
-    #######################
-    # OBJECT SEGMENTATION #
-    #######################
-
-    "os_show_mask": True,
-    "os_show_outline": True,
-    "os_outline_thickness": 1, # DOES NOTHING!?!
-    "os_outline_color": (255, 0, 0), # blue
 
     #################
     # CLASS COUNTER #
@@ -145,5 +124,19 @@ setting = {
     "fps_font_scale": 0.7,
     "fps_color": (255, 255, 255), # white
     "fps_font_thickness": 1,
-    
+
+    #########
+    # PATHS #
+    #########
+    "pth_models": "models/",
+    "pth_yolo_models": "models/yolo_models/",
+    "pth_custom_models": "models/custom_models/",
+    "pth_output": "output/",
+    "pth_predictions": "predictions/",
+    "pth_video_frames": "output/vidshot/",
+    "pth_dataset_info": "train/",
+    "pth_training_images": "train/images/train/",
+    "pth_validation_images": "train/images/val/",
+    "pth_training_labels": "train/labels/train/",
+    "pth_validation_labels": "train/labels/val/",   
 }

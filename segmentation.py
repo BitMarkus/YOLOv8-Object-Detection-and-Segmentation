@@ -14,8 +14,12 @@ class Segment(Detect):
     #############################################################################################################
     # CONSTRUCTOR:
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, mode):
+        super().__init__(mode)
+
+        # Mode for images or videos
+        # Important for setting inferance size for basis class
+        self.mode = mode
 
         # Outline thickness and color of segmentation masks
         self.show_show_mask = setting["os_show_mask"]  

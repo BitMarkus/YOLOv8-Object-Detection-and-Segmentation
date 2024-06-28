@@ -69,10 +69,10 @@ class VideoOD():
         # Modes
         # Object detection
         if(self.activate_object_detection):
-            self.detection = Detect()
+            self.detection = Detect('vid')
         # Object segmentation
         if(self.activate_object_segmentation):
-            self.segmentation = Segment() 
+            self.segmentation = Segment('vid') 
         # Object tracking
         if(self.activate_object_tracking):
             self.tracker = Track()       

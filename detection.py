@@ -13,7 +13,14 @@ class Detect():
     #############################################################################################################
     # CONSTRUCTOR:
 
-    def __init__(self):
+    def __init__(self, mode):
+        # Modes for image and video detection
+        # Image size for inference: It is more comfortable to have different values for images and videos
+        if(mode == 'img'):
+            self.inf_img_size = setting["od_inf_size_img"]
+        elif(mode == 'vid'):
+            self.inf_img_size = setting["od_inf_size_vid"] 
+
         # Load model and class names
         self.mdl = ModelOD()
         self.model = self.mdl.model
@@ -25,8 +32,6 @@ class Detect():
             self.od_class_list = None
         else:
             self.od_class_list = setting["od_class_selection"]
-        # Image size for inference
-        self.inf_img_size = (setting["od_inf_img_size_width"], setting["od_inf_img_size_height"])
         # Sets the minimum confidence threshold for detections
         self.min_conf = setting["od_min_conf"]   
         # Limits the amount of detections on an image (default 300)

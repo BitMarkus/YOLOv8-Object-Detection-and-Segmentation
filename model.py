@@ -14,14 +14,18 @@ class ModelOD():
     def __init__(self):
         # Select model for detection (pretrained vs. custom)
         self.use_pretrained_model = setting["od_use_pretrained_model"]
+        # Model name strings
+        self.model_prefix = "yolov8"
+        self.segmentation_model_postfix = "-seg"
+        self.pretrained_model_extension = ".pt"
         # Load model
         # Pretrained model
         if(self.use_pretrained_model):
             # Normal vs. segmentation model
             if(setting["od_use_segmentation_model"]):
-                self.model_name = f'{setting["od_model_prefix"]}{setting["od_pretrained_model_size"]}{setting["od_segmentation_model_postfix"]}{setting["od_pretrained_model_extension"]}'
+                self.model_name = f'{self.model_prefix}{setting["od_pretrained_model_size"]}{self.segmentation_model_postfix}{self.pretrained_model_extension}'
             else:
-                self.model_name = f'{setting["od_model_prefix"]}{setting["od_pretrained_model_size"]}{setting["od_pretrained_model_extension"]}'
+                self.model_name = f'{self.model_prefix}{setting["od_pretrained_model_size"]}{self.pretrained_model_extension}'
             # Model with path
             self.model_pth = f'{setting["pth_yolo_models"]}{self.model_name}'
         # Custom model

@@ -44,10 +44,10 @@ class ImageOD():
         # Modes
         # Object detection
         if(self.activate_object_detection):
-            self.detection = Detect()
+            self.detection = Detect('img')
         # Object segmentation
         if(self.activate_object_segmentation):
-            self.segmentation = Segment()        
+            self.segmentation = Segment('img')        
 
     #############################################################################################################
     # METHODS:

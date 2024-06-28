@@ -10,12 +10,17 @@ class Train:
         self.pth_training_output = setting["pth_output"]
         # Selection of model for training
         # Either an empty model or a pretrained model (yolov8 models) can be used for training
+        # Model name strings
+        self.model_prefix = "yolov8"
+        self.empty_model_extension = ".yaml"
+        self.pretrained_model_extension = ".pt"
+        # Set model for training
         self.use_pretrained_model = setting["train_use_pretrained_model"]
-        self.model_name = f'{setting["train_model_prefix"]}{setting["train_model_size"]}'
+        self.model_name = f'{self.model_prefix}{setting["train_model_size"]}'
         if(self.use_pretrained_model):
-            self.model_file = f'{self.model_name}{setting["train_pretrained_model_extension"]}'
+            self.model_file = f'{self.model_name}{self.pretrained_model_extension}'
         else:
-            self.model_file = f'{self.model_name}{setting["train_empty_model_extension"]}'
+            self.model_file = f'{self.model_name}{self.empty_model_extension}'
         self.model = YOLO(f'{setting["pth_yolo_models"]}{self.model_file}')
         # Network hyperparameters
         self.num_epochs = setting["train_num_epochs"]
