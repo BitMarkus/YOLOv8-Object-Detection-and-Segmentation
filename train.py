@@ -26,8 +26,9 @@ class Train:
         self.num_epochs = setting["train_num_epochs"]
         self.batch_size = setting["train_batch_size"]
         self.patience = setting["train_patience"]
-        # Image size for training
+        # Image size and shape for training
         self.train_img_size = setting["train_img_size"]
+        self.train_rectangular_img = setting["train_rectangular_img"]
         # Train validation
         self.do_validation = setting["train_validation"]
         self.verbose = setting["train_verbose"]
@@ -49,4 +50,5 @@ class Train:
             seed=self.seed,
             plots=self.save_plots,
             project=self.pth_training_output,
+            rect=self.train_rectangular_img,
         )      

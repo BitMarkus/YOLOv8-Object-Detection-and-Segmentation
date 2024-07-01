@@ -16,6 +16,7 @@ setting = {
     "train_patience": 0,
     "train_validation": True,
     "train_img_size": 1024,
+    "train_rectangular_img": True,
     "train_verbose": True,
     "train_seed": 123,
     "train_save_plots": True,
@@ -53,6 +54,7 @@ setting = {
     "od_save_predicted_images": True, 
     # Defines the image size for inference for images (w, h)
     "od_inf_size_img": (1024, 1024),
+    "od_rectangular_img": True,
 
     ### FOR VIDEOS ###
     "od_show_output_video": True,
@@ -67,7 +69,10 @@ setting = {
     "od_saved_video_frame_prefix": "video_frame_",
     "od_saved_video_frame_extension": ".png",
     # Defines the image size for inference for videos (w, h)
+    # Results are as expected when width and height is changed:
+    # https://github.com/ultralytics/ultralytics/issues/3955
     "od_inf_size_vid": (1920, 1088),
+    "od_rectangular_video": False,
 
     ## FOR VIDEOS AND IMAGES ###
     # Result window

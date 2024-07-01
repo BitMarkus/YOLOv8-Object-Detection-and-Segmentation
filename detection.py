@@ -18,8 +18,10 @@ class Detect():
         # Image size for inference: It is more comfortable to have different values for images and videos
         if(mode == 'img'):
             self.inf_img_size = setting["od_inf_size_img"]
+            self.rectangular = setting["od_rectangular_img"]
         elif(mode == 'vid'):
             self.inf_img_size = setting["od_inf_size_vid"] 
+            self.rectangular = setting["od_rectangular_video"]
 
         # Load model and class names
         self.mdl = ModelOD()
@@ -70,8 +72,9 @@ class Detect():
             conf=self.min_conf,
             iou=self.iou,
             imgsz=self.inf_img_size,
+            rect=self.rectangular,
             max_det=self.max_detections,
-            classes=self.od_class_list
+            classes=self.od_class_list,
         )
         return results 
     
