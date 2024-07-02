@@ -16,6 +16,8 @@ setting = {
     "train_model_size": "x",
     # Name of the necessary train info located in folder /train
     "train_dataset_info_name": "dataset.yaml",
+    # Dict of classes for automatic generation of dataset.yaml file
+    "train_classes": {0: 'zentrosom', 1: 'zilium',},
 
     # Training hyperparameters
     # https://docs.ultralytics.com/usage/cfg/#train-settings
@@ -58,6 +60,31 @@ setting = {
     # Downsample ratio for segmentation masks, affecting the resolution of masks used during training.
     # Standart: 4
     "train_mask_ratio": 4,
+
+    # Data augmentation
+    # Adjust the hue, saturation, and value of the image colors to introduce color variability
+    "aug_hsv_h": 0.015,  # hue
+    "aug_hsv_s": 0.7,   # saturation
+    "aug_hsv_v": 0.4,   # value
+    # Rotate the image by a certain degree to simulate different orientations
+    "aug_degrees": 0.0, 
+    # Translate the image horizontally and vertically to simulate different positions
+    "aug_translate": 0.1, 
+    # Scale the image to simulate different sizes of objects
+    "aug_scale": 0.5,
+    # Shear the image to simulate perspective changes
+    "aug_shear": 0.0,
+    # Adjust the perspective of the image
+    "aug_perspective": 0.0,
+    # Flip the image upside down or left to right
+    "aug_flipud": 0.0,  # flip up and down
+    "aug_fliplr": 0.5,  # flip left and right
+    # Combine four training images into one to simulate different contexts
+    "aug_mosaic": 1.0,
+    # Overlay two images to create a single composite image
+    "aug_mixup": 0.0,
+    # For segmentation tasks, copy objects from one image and paste them onto another
+    "aug_copy_paste": 0.0,
 
     ####################
     # OBJECT DETECTION #
@@ -240,7 +267,7 @@ setting = {
     "pth_dataset_info": "train/",
     "pth_training_images": "train/images/train/",
     "pth_validation_images": "train/images/val/",
-    "pth_training_labels": "train/labels/train/",
-    "pth_validation_labels": "train/labels/val/",   
+    # "pth_training_labels": "train/labels/train/",
+    # "pth_validation_labels": "train/labels/val/",   
 
 }
