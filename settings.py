@@ -29,7 +29,7 @@ setting = {
     "od_use_pretrained_model": True,
     "od_use_segmentation_model": True,
     # Standard model
-    "od_pretrained_model_size": "m",
+    "od_pretrained_model_size": "x",
     # Name of custom model
     "od_custom_model_name": "nuclei_3000e_m_best.pt", # cilia_3000e_m_best.pt, nuclei_3000e_m_best.pt
     # List of classes to detect, empy list = all classes
@@ -71,7 +71,7 @@ setting = {
     # Defines the image size for inference for videos (w, h)
     # Results are as expected when width and height is changed:
     # https://github.com/ultralytics/ultralytics/issues/3955
-    "od_inf_size_vid": (1920, 1088),
+    "od_inf_size_vid": (1088, 1920),
     "od_rectangular_video": False,
 
     ## FOR VIDEOS AND IMAGES ###
