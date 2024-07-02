@@ -1,10 +1,11 @@
+# Windows:
+path: D:/Programmieren/AI/YOLOv8/Projekte/YOLOv8_OD  # dataset root dir as absolute path 
 # Linux Ubuntu:
 # path: /home/markus/yolov8/yolo_od  # dataset root dir as absolute path
-# Windows:
-path: D:/Programmieren/AI/YOLOv8/Projekte/YOLOv8_OD  # dataset root dir as absolute path
 train: train/images/train  # train images (relative to 'path')
 val: train/images/val  # val images (relative to 'path')
 
 # Classes
 names:
-  0: nucleus
+  0: zentrosom
+  1: zilium

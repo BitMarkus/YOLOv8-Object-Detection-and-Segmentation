@@ -34,11 +34,20 @@ class Train:
         self.verbose = setting["train_verbose"]
         self.seed = setting["train_seed"]
         self.save_plots = setting["train_save_plots"]
+        # Save checkpoints each x epochs
+        self.chckpt_save_period = setting["train_chckpt_save_period"]
+        # Emphasize box or class accuracy
+        self.box_emph = setting["train_box_emph"]
+        self.class_emph = setting["train_class_emph"]
+        # Segmentation training
+        self.overlap_mask = setting["train_overlap_mask"]
+        self.mask_ratio = setting["train_mask_ratio"]
 
     def __call__(self):
         # train the model 
-        # # Train parameters: https://docs.ultralytics.com/usage/cfg/#train-settings   
+        # Train parameters: https://docs.ultralytics.com/usage/cfg/#train-settings   
         self.model.train(
+            model=self.model,
             data=self.pth_dataset_info, 
             pretrained=self.use_pretrained_model,
             imgsz=self.train_img_size,
@@ -51,4 +60,10 @@ class Train:
             plots=self.save_plots,
             project=self.pth_training_output,
             rect=self.train_rectangular_img,
+            save_period=self.chckpt_save_period,
+            box=self.box_emph,
+            cls=self.class_emph,
+            overlap_mask=self.overlap_mask,
+            mask_ratio=self.mask_ratio,
+            save=True,
         )      
