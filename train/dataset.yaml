@@ -1,11 +1,22 @@
-# Windows:
-path: D:/Programmieren/AI/YOLOv8/Projekte/YOLOv8_OD  # dataset root dir as absolute path 
-# Linux Ubuntu:
-# path: /home/markus/yolov8/yolo_od  # dataset root dir as absolute path
-train: train/images/train  # train images (relative to 'path')
-val: train/images/val  # val images (relative to 'path')
+path: D:\Programmieren\AI\YOLOv8\Projekte\YOLOv8_OD
+train: train/images/train/
+val: train/images/val/
 
-# Classes
 names:
   0: zentrosom
   1: zilium
+
+augmentations:
+  hsv_h: 0.015
+  hsv_s: 0.7
+  hsv_v: 0.4
+  degrees: 0.0
+  translate: 0.1
+  scale: 0.5
+  shear: 0.0
+  perspective: 0.0
+  flipud: 0.0
+  fliplr: 0.5
+  mosaic: 1.0
+  mixup: 0.0
+  copy_paste: 0.0

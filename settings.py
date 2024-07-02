@@ -22,7 +22,7 @@ setting = {
     # Training hyperparameters
     # https://docs.ultralytics.com/usage/cfg/#train-settings
     # Total number of training epochs. Each epoch represents a full pass over the entire dataset
-    "train_num_epochs": 3000,
+    "train_num_epochs": 5000,
     # Batch size, with three modes: set as an integer (e.g., batch=16), auto mode for 60% GPU memory 
     # utilization (batch=-1), or auto mode with specified utilization fraction (batch=0.70)
     "train_batch_size": 1,
@@ -62,6 +62,8 @@ setting = {
     "train_mask_ratio": 4,
 
     # Data augmentation
+    # https://github.com/orgs/ultralytics/discussions/4142
+    # https://docs.ultralytics.com/usage/cfg/#augmentation-settings
     # Adjust the hue, saturation, and value of the image colors to introduce color variability
     "aug_hsv_h": 0.015,  # hue
     "aug_hsv_s": 0.7,   # saturation
@@ -267,7 +269,7 @@ setting = {
     "pth_dataset_info": "train/",
     "pth_training_images": "train/images/train/",
     "pth_validation_images": "train/images/val/",
-    # "pth_training_labels": "train/labels/train/",
-    # "pth_validation_labels": "train/labels/val/",   
+    "pth_training_labels": "train/labels/train/",
+    "pth_validation_labels": "train/labels/val/",   
 
 }

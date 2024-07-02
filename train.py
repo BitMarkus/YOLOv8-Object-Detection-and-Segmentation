@@ -76,8 +76,8 @@ class Train:
 
     # Dynamically creates the dataset.yaml file, which is necessary for training
     def generate_dataset_info(self):
-        # get the user's home directory path in a platform-independent way
-        home = Path.home()
+        # get the programs root directory path
+        home = os.getcwd()
         # Create a new dataset.yaml file 
         # This mode opens the file for writing only. The data in existing files are modified and overwritten
         # If the file does not already exist in the folder, a new one gets created
@@ -89,23 +89,23 @@ class Train:
         # Write classes
         f.write('names:\n') 
         for key in self.train_classes:
-            f.write(f'{key}: {self.train_classes[key]}\n') 
+            f.write(f'  {key}: {self.train_classes[key]}\n') 
         f.write('\n') 
         # Write augmentation list
         f.write('augmentations:\n') 
-        f.write(f'hsv_h: {self.aug_hsv_h}\n')
-        f.write(f'hsv_s: {self.aug_hsv_s}\n')
-        f.write(f'hsv_v: {self.aug_hsv_v}\n')
-        f.write(f'degrees: {self.aug_degrees}\n')
-        f.write(f'translate: {self.aug_translate}\n')
-        f.write(f'scale: {self.aug_scale}\n')
-        f.write(f'shear: {self.aug_shear}\n')
-        f.write(f'perspective: {self.aug_perspective}\n')
-        f.write(f'flipud: {self.aug_flipud}\n')
-        f.write(f'fliplr: {self.aug_fliplr}\n')
-        f.write(f'mosaic: {self.aug_mosaic}\n')
-        f.write(f'mixup: {self.aug_mixup}\n')
-        f.write(f'copy_paste: {self.aug_copy_paste}')
+        f.write(f'  hsv_h: {self.aug_hsv_h}\n')
+        f.write(f'  hsv_s: {self.aug_hsv_s}\n')
+        f.write(f'  hsv_v: {self.aug_hsv_v}\n')
+        f.write(f'  degrees: {self.aug_degrees}\n')
+        f.write(f'  translate: {self.aug_translate}\n')
+        f.write(f'  scale: {self.aug_scale}\n')
+        f.write(f'  shear: {self.aug_shear}\n')
+        f.write(f'  perspective: {self.aug_perspective}\n')
+        f.write(f'  flipud: {self.aug_flipud}\n')
+        f.write(f'  fliplr: {self.aug_fliplr}\n')
+        f.write(f'  mosaic: {self.aug_mosaic}\n')
+        f.write(f'  mixup: {self.aug_mixup}\n')
+        f.write(f'  copy_paste: {self.aug_copy_paste}')
         f.close()
 
     # Deletes the dataset.yaml file
