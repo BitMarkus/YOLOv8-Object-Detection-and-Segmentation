@@ -2,7 +2,7 @@
  
 Object detection and segmentation on videos and images based on YOLOv8 (in python).
 
-After cloning the git repository, the folder structure will automatically created while the program is started for the first time. 
+After cloning the github repository, the folder structure will automatically be created while the program is started for the first time. 
 
 FOLDERS: 
 - models/: Either self trained models (subfolder custom_models) or YOLOv8 models for detection or segmentation (subfolder yolo_models) must be placed in these folders.
@@ -16,7 +16,7 @@ The software comes with a console menu to select different functions. All necess
 - Object detection and object segmentation on images
 - Object detection, segmentation, and tracking on videos (saved videos or live stream form a camera)
 - Object detection, segmentation, and tracking on screen captures (defined region on a monitor)
-Videos and screen captures can be recorded by changing "od_save_output_video" in the settings.py file to True. Pressing the 's' key makes a snapshots of the running video or screen capture.
+- Videos and screen captures can be recorded by changing "od_save_output_video" in the settings.py file to True. Pressing the 's' key makes a snapshots of the running video or screen capture.
 
 ENVIRONMENT:
 - Runs on CUDA

@@ -146,7 +146,7 @@ setting = {
     # Press 'Esc' to close video window, press 's'
     "od_show_output_video": True,
     # Set to true if predicted video is supposed to be saved
-    "od_save_output_video": True, 
+    "od_save_output_video": False, 
     # Name of the output video file (if saved)
     # Currently only one video can be recorded. A second record will overwrite the old one due to the same name!
     "od_output_video_name": "object_detection",
