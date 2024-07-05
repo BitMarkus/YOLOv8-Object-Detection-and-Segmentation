@@ -19,7 +19,7 @@ setting = {
     # Dict of classes for automatic generation of dataset.yaml file
     "train_classes": {0: 'zentrosom', 1: 'zilium',},
 
-    # Training hyperparameters
+    # Training parameters
     # https://docs.ultralytics.com/usage/cfg/#train-settings
     # Total number of training epochs. Each epoch represents a full pass over the entire dataset
     "train_num_epochs": 5000,
@@ -60,6 +60,42 @@ setting = {
     # Downsample ratio for segmentation masks, affecting the resolution of masks used during training.
     # Standart: 4
     "train_mask_ratio": 4,
+
+    # Training hyperparameters
+    # Choice of optimizer for training. Options include SGD, Adam, AdamW, NAdam, RAdam, RMSProp etc., 
+    # or 'auto' for automatic selection based on model configuration
+    # Default = auto
+    "train_optimizer": 'auto',
+    # Utilizes a cosine learning rate scheduler, adjusting the learning rate following a cosine curve over epochs
+    # Default = False
+    "train_cos_lr": False,
+    # Initial learning rate (i.e. SGD=1E-2, Adam=1E-3) . Adjusting this value is crucial for the 
+    # optimization process, influencing how rapidly model weights are updated
+    # Default = 0.01
+    "train_lr0": 0.01,
+    # Final learning rate as a fraction of the initial rate = (lr0 * lrf), used in conjunction with 
+    # schedulers to adjust the learning rate over time
+    # Default = 0.01
+    "train_lrf": 0.01,
+    # Momentum factor for SGD or beta1 for Adam optimizers, influencing the incorporation of past gradients in the current update
+    # Default = 0.937
+    "train_momentum": 0.937,
+    # L2 regularization term, penalizing large weights to prevent overfitting
+    # Default = 0.0005
+    "train_weight_decay": 0.0005,
+    # Number of epochs for learning rate warmup, gradually increasing the learning rate from a low 
+    # value to the initial learning rate to stabilize training early on
+    # Default = 3.0
+    "train_warmup_epochs": 3.0,
+    # Initial momentum for warmup phase, gradually adjusting to the set momentum over the warmup period
+    # Default = 0.8
+    "train_warmup_momentum": 0.8,
+    # Learning rate for bias parameters during the warmup phase, helping stabilize model training in the initial epochs
+    # Default = 0.1
+    "train_warmup_bias_lr": 0.1,
+    # Dropout rate for regularization in classification tasks, preventing overfitting by randomly omitting units during training
+    # Default = 0.0
+    "train_dropout": 0.0,
 
     # Data augmentation
     # https://github.com/orgs/ultralytics/discussions/4142
@@ -205,7 +241,7 @@ setting = {
     # https://docs.ultralytics.com/guides/object-counting/#argument-objectcounter  
     # Region points for object counting
     "oc_roi_start": (10, 10),
-    "oc_roi_size": (1900, 1060),
+    "oc_roi_size": (1316, 732), # (1900, 1060)
     # Sets the minimum confidence threshold for counting
     "oc_min_conf": 0.4,
     # List of classes to count, empy list = all classes

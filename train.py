@@ -70,6 +70,17 @@ class Train:
         self.aug_mosaic = setting["aug_mosaic"]
         self.aug_mixup = setting["aug_mixup"]
         self.aug_copy_paste = setting["aug_copy_paste"]
+        # Training hyperparameters
+        self.hyp_optimizer = setting["train_optimizer"]
+        self.hyp_cos_lr = setting["train_cos_lr"]
+        self.hyp_lr0 = setting["train_lr0"]
+        self.hyp_lrf = setting["train_lrf"]
+        self.hyp_momentum = setting["train_momentum"]
+        self.hyp_weight_decay = setting["train_weight_decay"]
+        self.hyp_warmup_epochs = setting["train_warmup_epochs"]
+        self.hyp_warmup_momentum = setting["train_warmup_momentum"]
+        self.hyp_warmup_bias_lr = setting["train_warmup_bias_lr"]
+        self.hyp_dropout = setting["train_dropout"]        
 
     #############################################################################################################
     # METHODS:
@@ -107,6 +118,19 @@ class Train:
         f.write(f'  mosaic: {self.aug_mosaic}\n')
         f.write(f'  mixup: {self.aug_mixup}\n')
         f.write(f'  copy_paste: {self.aug_copy_paste}')
+        f.write('\n\n') 
+        # Write training hyperparameters list
+        f.write('hyperparameters:\n') 
+        f.write(f"  optimizer: '{self.hyp_optimizer}'\n")
+        f.write(f'  cos_lr: {self.hyp_cos_lr}\n')
+        f.write(f'  lr0: {self.hyp_lr0}\n')
+        f.write(f'  lrf: {self.hyp_lrf}\n')
+        f.write(f'  momentum: {self.hyp_momentum}\n')
+        f.write(f'  weight_decay: {self.hyp_weight_decay}\n')
+        f.write(f'  warmup_epochs: {self.hyp_warmup_epochs}\n')
+        f.write(f'  warmup_momentum: {self.hyp_warmup_momentum}\n')
+        f.write(f'  warmup_bias_lr: {self.hyp_warmup_bias_lr}\n')
+        f.write(f'  dropout: {self.hyp_dropout}\n')
         f.close()
 
     # Deletes the dataset.yaml file
