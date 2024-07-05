@@ -13,7 +13,7 @@ setting = {
     # Can be a boolean value or a string path to a specific model from which to load weights
     "train_use_pretrained_model": False,
     # Size of the pretrained model (n, s, m, l, x)
-    "train_model_size": "x",
+    "train_model_size": "m",
     # Name of the necessary train info located in folder /train
     "train_dataset_info_name": "dataset.yaml",
     # Dict of classes for automatic generation of dataset.yaml file
@@ -25,7 +25,7 @@ setting = {
     "train_num_epochs": 5000,
     # Batch size, with three modes: set as an integer (e.g., batch=16), auto mode for 60% GPU memory 
     # utilization (batch=-1), or auto mode with specified utilization fraction (batch=0.70)
-    "train_batch_size": 1,
+    "train_batch_size": 3,
     # Number of epochs to wait without improvement in validation metrics before early stopping the training.
     # 0 for no early stopping
     "train_patience": 0,
@@ -40,7 +40,7 @@ setting = {
     # Enables verbose output during training, providing detailed logs and progress updates
     "train_verbose": True,
     # Sets the random seed for training, ensuring reproducibility of results across runs with the same configurations
-    "train_seed": 123,
+    "train_seed": 111,
     # Generates and saves plots of training and validation metrics, as well as prediction examples, 
     # providing visual insights into model performance and learning progression
     "train_save_plots": True,
@@ -94,13 +94,13 @@ setting = {
 
     # Set to True if a pretrained yolov8 model is used
     # Set to False for a custom/self trained model
-    "od_use_pretrained_model": False,
+    "od_use_pretrained_model": True,
     # Set to True, if a segmentation model is used (ends with -seg.pt)
-    "od_use_segmentation_model": False,
+    "od_use_segmentation_model": True,
     # Size of the pretrained model (n, s, m, l, x)
-    "od_pretrained_model_size": "x",
+    "od_pretrained_model_size": "m",
     # Name of custom model, in case 'od_use_pretrained_model' is set to False
-    "od_custom_model_name": "cilia_x_5000e_pretrained.pt", # cilia_3000e_m_best.pt, nuclei_3000e_m_best.pt
+    "od_custom_model_name": "cilia_5000e_m_ds2_best.pt", # cilia_3000e_m_best.pt, nuclei_3000e_m_best.pt
 
     # https://docs.ultralytics.com/usage/cfg/#predict-settings
     # Filters predictions to a set of class IDs. Only detections belonging to the specified classes will be returned
@@ -136,7 +136,7 @@ setting = {
     # Set to true if predicted images are supposed to be saved 
     "od_save_predicted_images": True, 
     # Defines the image size for inference for images (w, h)
-    "od_inf_size_img": (1024, 1024),
+    "od_inf_size_img": (1024, 1024),    # (1024, 1024)
     # Set to true if images for prediction are rectangeled,
     # Set to false if images are squared
     "od_rectangular_img": True,
@@ -146,7 +146,7 @@ setting = {
     # Press 'Esc' to close video window, press 's'
     "od_show_output_video": True,
     # Set to true if predicted video is supposed to be saved
-    "od_save_output_video": False, 
+    "od_save_output_video": True, 
     # Name of the output video file (if saved)
     # Currently only one video can be recorded. A second record will overwrite the old one due to the same name!
     "od_output_video_name": "object_detection",
@@ -163,10 +163,20 @@ setting = {
     # Defines the image size for inference for videos (w, h)
     # Results are as expected when width and height is changed:
     # https://github.com/ultralytics/ultralytics/issues/3955
-    "od_inf_size_vid": (1088, 1920),
+    "od_inf_size_vid": (768, 1344),
     # Set to true if video for prediction is rectangeled,
     # Set to false if video is squared    
     "od_rectangular_video": False,
+
+    ### DETECTION FROM SCREEN ###
+    # Monitor selection for multi monitor setup
+    "od_monitor_number": 2,
+    # Offset of capture region from the left upper corner of the monitor
+    "od_capture_roi_offset_xy": (28, 208),
+    # Width and height of the capture region
+    "od_capture_roi_size_wh": (1336, 752),
+    # FPS for capture video recording
+    "od_capture_roi_record_fps": 12,
 
     ### RESULT WINDOW (VIDEO AND IMAGES) ###
     # Result window title

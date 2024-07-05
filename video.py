@@ -149,14 +149,14 @@ class VideoOD():
             if(self.activate_object_tracking):
                 frame = self.tracker(frame)
 
-            # Save output video
-            if(self.save_output_video):
-                out.write(frame)
-
             # End fps counter and show fps in left upper corner
             if(self.show_fps_display):
                 end_time = time()
                 self.fps_display(frame, start_time, end_time)
+
+            # Save output video
+            if(self.save_output_video):
+                out.write(frame)
 
             # Show frame with cv2
             if(self.show_output_video):

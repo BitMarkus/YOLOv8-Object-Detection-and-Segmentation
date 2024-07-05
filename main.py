@@ -2,6 +2,7 @@
 from train import Train 
 from video import VideoOD
 from image import ImageOD
+from screen import ScreenOD
 import functions as fcn
 from settings import setting
 
@@ -27,8 +28,12 @@ def main():
         print("  4) Object Detection")
         print("  5) Object Segmentation")
         print("  6) Object Tracking")
+        print(">> SCREEN CAPTURE PROCESSING:")
+        print("  7) Object Detection")
+        print("  8) Object Segmentation")
+        print("  9) Object Tracking")
         print(">> PROGRAM:")
-        print("  7) Exit Program")
+        print("  10) Exit Program")
         menu1 = int(fcn.input_int("Please choose: "))
 
         #################
@@ -87,11 +92,38 @@ def main():
             od_video = VideoOD('track')
             od_video()
 
+        ###########################
+        # Object Detection Screen #  
+        ###########################
+
+        elif(menu1 == 7):      
+            print("\n:OBJECT DETECTION ON SCREEN:") 
+            od_video = ScreenOD('detect')
+            od_video()
+
+        ##############################
+        # Object Segmentation Screen #  
+        ##############################
+
+        elif(menu1 == 8):      
+            print("\n:OBJECT SEGMENTATION ON SCREEN:") 
+            od_video = ScreenOD('segment')
+            od_video()
+
+        ##########################
+        # Object Tracking Screen #  
+        ##########################
+
+        elif(menu1 == 9):      
+            print("\n:OBJECT TRACKING ON SCREEN:") 
+            od_video = ScreenOD('track')
+            od_video()
+
         ################
         # Exit Program #  
         ################      
 
-        elif(menu1 == 7):
+        elif(menu1 == 10):
             print("\nExit program...")
             break
         

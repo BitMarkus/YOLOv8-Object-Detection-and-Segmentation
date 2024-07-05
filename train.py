@@ -84,6 +84,7 @@ class Train:
         f = open(self.pth_dataset_info, "w")
         # Write home and image directories
         f.write(f'path: {home}\n') 
+        # Replace \ by / in the string??? -> Works at least in Windows as expected
         f.write(f'train: {self.pth_training_images}\n')
         f.write(f'val: {self.pth_validation_images}\n\n')
         # Write classes

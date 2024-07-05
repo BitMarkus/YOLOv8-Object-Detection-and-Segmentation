@@ -90,7 +90,7 @@ class Detect():
         
         # Annotate bounding boxes
         if(self.show_bbox):
-            img = self.box_annotator.annotate(scene=img, detections=detections) # scene=frame.copy(),
+            img = self.box_annotator.annotate(scene=img.copy(), detections=detections) # scene=frame.copy(),
         # Annotate labels
         if(self.show_labels):
             img = self.label_annotator.annotate(scene=img, detections=detections, labels=self.labels)

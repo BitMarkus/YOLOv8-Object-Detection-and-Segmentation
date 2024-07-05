@@ -1,4 +1,4 @@
-path: D:\Programmieren\AI\YOLOv8\Projekte\YOLOv8_OD
+path: /home/markus/yolov8/YOLOv8_OD
 train: train/images/train/
 val: train/images/val/
 

@@ -15,6 +15,8 @@ The software comes with a console menu to select different functions. All necess
 - Train model: Trains of fine tunes a model with a custom dataset. All parameters for training can be set in the settings.py file.
 - Object detection and object segmentation on images
 - Object detection, segmentation, and tracking on videos (saved videos or live stream form a camera)
+- Object detection, segmentation, and tracking on screen captures (defined region on a monitor)
+Videos and screen captures can be recorded by changing "od_save_output_video" in the settings.py file to True. Pressing the 's' key makes a snapshots of the running video or screen capture.
 
 ENVIRONMENT:
 - Runs on CUDA
