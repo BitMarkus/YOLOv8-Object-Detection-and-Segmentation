@@ -139,7 +139,7 @@ class VideoOD():
 
             # OBJECT DETECTION #
             if(self.activate_object_detection):
-                frame = self.detection(frame)
+                frame, _ = self.detection(frame)
 
             # OBJECT SEGMENTATION #
             if(self.activate_object_segmentation):

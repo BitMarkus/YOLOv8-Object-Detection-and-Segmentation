@@ -97,12 +97,38 @@ class Detect():
 
         return img 
     
+    # Function formats the results for one image as a string
+    # to save it in a text file as table
+    def get_detection_result(self, result):
+        # Detection results as dict
+        det_result = {}
+        # Read detections per image/frame and class
+        # Check first if there are any detections in the image
+        if(len(result.boxes)):
+            # Iterate over class names
+            for class_index, class_name in self.class_names.items():
+                # Determine count per class
+                object_count = result.boxes.cls.tolist().count(class_index)
+                # Build dict with results (class: count)
+                det_result[class_name] = object_count
+        # If there are no detections
+        else:
+            # Iterate over class names
+            for class_index, class_name in self.class_names.items():   
+                # Detections for class is 0
+                det_result[class_name] = 0  
+
+        return det_result
+
+    
     #############################################################################################################
     # CALL:
 
     def __call__(self, img):
         # Predict objects in image/frame
         results = self.predict(img)  
+
+        result_dict = self.get_detection_result(results[0])
 
         # Read detections from image/frame
         detections = self.read_detections(results[0])
@@ -114,4 +140,4 @@ class Detect():
         if(self.show_class_counter):
             img = self.class_counter(results[0], img, self.class_names)
 
-        return img 
+        return img, result_dict 

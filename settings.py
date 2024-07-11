@@ -13,19 +13,19 @@ setting = {
     # Can be a boolean value or a string path to a specific model from which to load weights
     "train_use_pretrained_model": False,
     # Size of the pretrained model (n, s, m, l, x)
-    "train_model_size": "m",
+    "train_model_size": "x",
     # Name of the necessary train info located in folder /train
-    "train_dataset_info_name": "dataset.yaml",
+    "train_dataset_info_name": "config.yaml",
     # Dict of classes for automatic generation of dataset.yaml file
     "train_classes": {0: 'zentrosom', 1: 'zilium',},
 
     # Training parameters
     # https://docs.ultralytics.com/usage/cfg/#train-settings
     # Total number of training epochs. Each epoch represents a full pass over the entire dataset
-    "train_num_epochs": 5000,
+    "train_num_epochs": 2500,
     # Batch size, with three modes: set as an integer (e.g., batch=16), auto mode for 60% GPU memory 
     # utilization (batch=-1), or auto mode with specified utilization fraction (batch=0.70)
-    "train_batch_size": 3,
+    "train_batch_size": 8,
     # Number of epochs to wait without improvement in validation metrics before early stopping the training.
     # 0 for no early stopping
     "train_patience": 0,
@@ -130,13 +130,13 @@ setting = {
 
     # Set to True if a pretrained yolov8 model is used
     # Set to False for a custom/self trained model
-    "od_use_pretrained_model": True,
+    "od_use_pretrained_model": False,
     # Set to True, if a segmentation model is used (ends with -seg.pt)
-    "od_use_segmentation_model": True,
+    "od_use_segmentation_model": False,
     # Size of the pretrained model (n, s, m, l, x)
     "od_pretrained_model_size": "m",
     # Name of custom model, in case 'od_use_pretrained_model' is set to False
-    "od_custom_model_name": "cilia_5000e_m_ds2_best.pt", # cilia_3000e_m_best.pt, nuclei_3000e_m_best.pt
+    "od_custom_model_name": "cilia_2500e_ds4_x_bs8_best.pt",
 
     # https://docs.ultralytics.com/usage/cfg/#predict-settings
     # Filters predictions to a set of class IDs. Only detections belonging to the specified classes will be returned
@@ -148,10 +148,10 @@ setting = {
     # Intersection Over Union (IoU) threshold: 
     # Lower values result in fewer detections by eliminating overlapping boxes, 
     # useful for reducing duplicates (default 0.7)
-    "od_iou": 0.7,
+    "od_iou": 0.5,
     # Sets the minimum confidence threshold for detections. Objects detected with confidence below 
     # this threshold will be disregarded
-    "od_min_conf": 0.3,
+    "od_min_conf": 0.5,
 
     # Settings for bounding box annotations
     # Show labels AND confidence on top of the bounding boxes
@@ -170,12 +170,17 @@ setting = {
     # Press any key to close image
     "od_show_predicted_images": False, 
     # Set to true if predicted images are supposed to be saved 
-    "od_save_predicted_images": True, 
+    "od_save_predicted_images": False, 
     # Defines the image size for inference for images (w, h)
     "od_inf_size_img": (1024, 1024),    # (1024, 1024)
     # Set to true if images for prediction are rectangeled,
     # Set to false if images are squared
     "od_rectangular_img": True,
+    # If this is set to true, a text file with the detection 
+    # results will be saved in the output folder
+    "od_export_results": True,
+    # Name of the result file
+    "od_export_file_name": 'results.txt',
 
     ### DETECTION FOR VIDEOS ###
     # Show predicted output video
