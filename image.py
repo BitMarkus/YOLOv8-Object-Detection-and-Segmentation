@@ -167,6 +167,7 @@ class ImageOD():
                 # OBJECT DETECTION #
                 if(self.activate_object_detection):
                     img, result = self.detection(img)
+                    # Add resukts to class count dict
                     results[image_name] = result
 
                 # OBJECT SEGMENTATION #
@@ -183,7 +184,6 @@ class ImageOD():
 
             # Save results in a text file
             if(self.export_results):
-                print(results)
                 self.save_result_file(results)
 
         # If there are no images in the prediction folder      

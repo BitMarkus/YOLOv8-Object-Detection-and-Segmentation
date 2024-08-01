@@ -2,7 +2,6 @@
 # Network Training #
 ####################
 
-from pathlib import Path
 import os
 # Own modules
 from ultralytics import YOLO

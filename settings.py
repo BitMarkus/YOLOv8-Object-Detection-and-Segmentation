@@ -17,15 +17,15 @@ setting = {
     # Name of the necessary train info located in folder /train
     "train_dataset_info_name": "config.yaml",
     # Dict of classes for automatic generation of dataset.yaml file
-    "train_classes": {0: 'zentrosom', 1: 'zilium',},
+    "train_classes": {0: 'no cilium', 1: 'cilium', 2: 'nucleus', 3: 'mitosis'},
 
     # Training parameters
     # https://docs.ultralytics.com/usage/cfg/#train-settings
     # Total number of training epochs. Each epoch represents a full pass over the entire dataset
-    "train_num_epochs": 2500,
+    "train_num_epochs": 3000,
     # Batch size, with three modes: set as an integer (e.g., batch=16), auto mode for 60% GPU memory 
     # utilization (batch=-1), or auto mode with specified utilization fraction (batch=0.70)
-    "train_batch_size": 8,
+    "train_batch_size": 8, # 2 for 2048, 8 for 1024
     # Number of epochs to wait without improvement in validation metrics before early stopping the training.
     # 0 for no early stopping
     "train_patience": 0,
@@ -45,7 +45,7 @@ setting = {
     # providing visual insights into model performance and learning progression
     "train_save_plots": True,
     # Frequency of saving model checkpoints, specified in epochs. A value of -1 disables this feature
-    "train_chckpt_save_period": 1000,
+    "train_chckpt_save_period": 500,
     # Weight of the box loss component in the loss function, influencing how much emphasis is 
     # placed on accurately predicting bounding box coordinates
     # Standart: 7.5
@@ -101,9 +101,15 @@ setting = {
     # https://github.com/orgs/ultralytics/discussions/4142
     # https://docs.ultralytics.com/usage/cfg/#augmentation-settings
     # Adjust the hue, saturation, and value of the image colors to introduce color variability
-    "aug_hsv_h": 0.015,  # hue
-    "aug_hsv_s": 0.7,   # saturation
-    "aug_hsv_v": 0.4,   # value
+    # Adjusts the hue of the image by a fraction of the color wheel, introducing color variability. 
+    # Helps the model generalize across different lighting conditions.
+    "aug_hsv_h": 0.015,  
+    # Alters the saturation of the image by a fraction, affecting the intensity of colors. 
+    # Useful for simulating different environmental conditions.
+    "aug_hsv_s": 0.7,
+    # Modifies the value (brightness) of the image by a fraction, helping the model to perform 
+    # well under various lighting conditions.
+    "aug_hsv_v": 0.4,
     # Rotate the image by a certain degree to simulate different orientations
     "aug_degrees": 0.0, 
     # Translate the image horizontally and vertically to simulate different positions
@@ -115,7 +121,7 @@ setting = {
     # Adjust the perspective of the image
     "aug_perspective": 0.0,
     # Flip the image upside down or left to right
-    "aug_flipud": 0.0,  # flip up and down
+    "aug_flipud": 0.5,  # flip up and down
     "aug_fliplr": 0.5,  # flip left and right
     # Combine four training images into one to simulate different contexts
     "aug_mosaic": 1.0,
@@ -136,7 +142,7 @@ setting = {
     # Size of the pretrained model (n, s, m, l, x)
     "od_pretrained_model_size": "m",
     # Name of custom model, in case 'od_use_pretrained_model' is set to False
-    "od_custom_model_name": "cilia_2500e_ds4_x_bs8_best.pt",
+    "od_custom_model_name": "cilia_2500e_ds6_x_bs2_2048px_best.pt",
 
     # https://docs.ultralytics.com/usage/cfg/#predict-settings
     # Filters predictions to a set of class IDs. Only detections belonging to the specified classes will be returned
@@ -148,10 +154,10 @@ setting = {
     # Intersection Over Union (IoU) threshold: 
     # Lower values result in fewer detections by eliminating overlapping boxes, 
     # useful for reducing duplicates (default 0.7)
-    "od_iou": 0.5,
+    "od_iou": 0.6,
     # Sets the minimum confidence threshold for detections. Objects detected with confidence below 
     # this threshold will be disregarded
-    "od_min_conf": 0.5,
+    "od_min_conf": 0.4,
 
     # Settings for bounding box annotations
     # Show labels AND confidence on top of the bounding boxes
@@ -170,12 +176,12 @@ setting = {
     # Press any key to close image
     "od_show_predicted_images": False, 
     # Set to true if predicted images are supposed to be saved 
-    "od_save_predicted_images": False, 
+    "od_save_predicted_images": True, 
     # Defines the image size for inference for images (w, h)
-    "od_inf_size_img": (1024, 1024),    # (1024, 1024)
+    "od_inf_size_img": (2048, 2048),    # (1024, 1024)
     # Set to true if images for prediction are rectangeled,
     # Set to false if images are squared
-    "od_rectangular_img": True,
+    "od_rectangular_img": False,
     # If this is set to true, a text file with the detection 
     # results will be saved in the output folder
     "od_export_results": True,

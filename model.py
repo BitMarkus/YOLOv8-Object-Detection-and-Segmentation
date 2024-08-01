@@ -48,6 +48,7 @@ class ModelOD():
         model.fuse
         return model
     
+    # Method to print the classes of a model
     def print_classes(self):
         print("Model name:", self.model_pth)
         print("Number of classes:", len(self.class_names))
