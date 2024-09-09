@@ -13,26 +13,27 @@ setting = {
     # Can be a boolean value or a string path to a specific model from which to load weights
     "train_use_pretrained_model": False,
     # Size of the pretrained model (n, s, m, l, x)
-    "train_model_size": "x",
+    "train_model_size": "m",
     # Name of the necessary train info located in folder /train
     "train_dataset_info_name": "config.yaml",
     # Dict of classes for automatic generation of dataset.yaml file
-    "train_classes": {0: 'no cilium', 1: 'cilium', 2: 'nucleus', 3: 'mitosis'},
+    # "train_classes": {0: 'no cilium', 1: 'cilium', 2: 'nucleus', 3: 'mitosis'},
+    "train_classes": {0: 'PC'},
 
     # Training parameters
     # https://docs.ultralytics.com/usage/cfg/#train-settings
     # Total number of training epochs. Each epoch represents a full pass over the entire dataset
-    "train_num_epochs": 3000,
+    "train_num_epochs": 8000,
     # Batch size, with three modes: set as an integer (e.g., batch=16), auto mode for 60% GPU memory 
     # utilization (batch=-1), or auto mode with specified utilization fraction (batch=0.70)
-    "train_batch_size": 8, # 2 for 2048, 8 for 1024
+    "train_batch_size": 4, # 2- for 2048 and x, 6 for 1024 and x, 8+ for 1024 and m, 15+ for 1024 and n
     # Number of epochs to wait without improvement in validation metrics before early stopping the training.
     # 0 for no early stopping
     "train_patience": 0,
     # Enables validation during training, allowing for periodic evaluation of model performance on a separate dataset
     "train_validation": True,
     # Target image size for training. All images are resized to this dimension before being fed into the model
-    "train_img_size": 1024,
+    "train_img_size": 2048,     # 2048, 1024
     # Enables rectangular training, optimizing batch composition for minimal padding.
     # TRAINING WARNING: 'rect=True' is incompatible with DataLoader shuffle, setting shuffle=False 
     # Eventually remove this from training
@@ -103,13 +104,13 @@ setting = {
     # Adjust the hue, saturation, and value of the image colors to introduce color variability
     # Adjusts the hue of the image by a fraction of the color wheel, introducing color variability. 
     # Helps the model generalize across different lighting conditions.
-    "aug_hsv_h": 0.015,  
+    "aug_hsv_h": 0.0,  # 0.015
     # Alters the saturation of the image by a fraction, affecting the intensity of colors. 
     # Useful for simulating different environmental conditions.
-    "aug_hsv_s": 0.7,
+    "aug_hsv_s": 0.0,   # 0.7
     # Modifies the value (brightness) of the image by a fraction, helping the model to perform 
     # well under various lighting conditions.
-    "aug_hsv_v": 0.4,
+    "aug_hsv_v": 0.0,   # 0.4
     # Rotate the image by a certain degree to simulate different orientations
     "aug_degrees": 0.0, 
     # Translate the image horizontally and vertically to simulate different positions
@@ -142,7 +143,7 @@ setting = {
     # Size of the pretrained model (n, s, m, l, x)
     "od_pretrained_model_size": "m",
     # Name of custom model, in case 'od_use_pretrained_model' is set to False
-    "od_custom_model_name": "cilia_2500e_ds6_x_bs2_2048px_best.pt",
+    "od_custom_model_name": "PC_8000e_m_ds3_2048px_best.pt",
 
     # https://docs.ultralytics.com/usage/cfg/#predict-settings
     # Filters predictions to a set of class IDs. Only detections belonging to the specified classes will be returned
@@ -178,7 +179,7 @@ setting = {
     # Set to true if predicted images are supposed to be saved 
     "od_save_predicted_images": True, 
     # Defines the image size for inference for images (w, h)
-    "od_inf_size_img": (2048, 2048),    # (1024, 1024)
+    "od_inf_size_img": (2048, 2048),    # (1024, 1024), (2048, 2048)
     # Set to true if images for prediction are rectangeled,
     # Set to false if images are squared
     "od_rectangular_img": False,

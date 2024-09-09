@@ -1,0 +1,6 @@
+path: C:\YOLO\YOLOv8_OD
+train: train/images/train/
+val: train/images/val/
+
+names:
+  0: PC

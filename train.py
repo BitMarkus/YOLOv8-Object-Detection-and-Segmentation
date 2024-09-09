@@ -91,46 +91,48 @@ class Train:
         # Create a new dataset.yaml file 
         # This mode opens the file for writing only. The data in existing files are modified and overwritten
         # If the file does not already exist in the folder, a new one gets created
-        f = open(self.pth_dataset_info, "w")
-        # Write home and image directories
-        f.write(f'path: {home}\n') 
-        # Replace \ by / in the string??? -> Works at least in Windows as expected
-        f.write(f'train: {self.pth_training_images}\n')
-        f.write(f'val: {self.pth_validation_images}\n\n')
-        # Write classes
-        f.write('names:\n') 
-        for key in self.train_classes:
-            f.write(f'  {key}: {self.train_classes[key]}\n') 
-        f.write('\n') 
-        # Write augmentation list
-        f.write('augmentations:\n') 
-        f.write(f'  hsv_h: {self.aug_hsv_h}\n')
-        f.write(f'  hsv_s: {self.aug_hsv_s}\n')
-        f.write(f'  hsv_v: {self.aug_hsv_v}\n')
-        f.write(f'  degrees: {self.aug_degrees}\n')
-        f.write(f'  translate: {self.aug_translate}\n')
-        f.write(f'  scale: {self.aug_scale}\n')
-        f.write(f'  shear: {self.aug_shear}\n')
-        f.write(f'  perspective: {self.aug_perspective}\n')
-        f.write(f'  flipud: {self.aug_flipud}\n')
-        f.write(f'  fliplr: {self.aug_fliplr}\n')
-        f.write(f'  mosaic: {self.aug_mosaic}\n')
-        f.write(f'  mixup: {self.aug_mixup}\n')
-        f.write(f'  copy_paste: {self.aug_copy_paste}')
-        f.write('\n\n') 
-        # Write training hyperparameters list
-        f.write('hyperparameters:\n') 
-        f.write(f"  optimizer: '{self.hyp_optimizer}'\n")
-        f.write(f'  cos_lr: {self.hyp_cos_lr}\n')
-        f.write(f'  lr0: {self.hyp_lr0}\n')
-        f.write(f'  lrf: {self.hyp_lrf}\n')
-        f.write(f'  momentum: {self.hyp_momentum}\n')
-        f.write(f'  weight_decay: {self.hyp_weight_decay}\n')
-        f.write(f'  warmup_epochs: {self.hyp_warmup_epochs}\n')
-        f.write(f'  warmup_momentum: {self.hyp_warmup_momentum}\n')
-        f.write(f'  warmup_bias_lr: {self.hyp_warmup_bias_lr}\n')
-        f.write(f'  dropout: {self.hyp_dropout}\n')
-        f.close()
+        with open(self.pth_dataset_info, "w") as f:
+            # Write home and image directories
+            f.write(f'path: {home}\n') 
+            # Replace \ by / in the string??? -> Works at least in Windows as expected
+            f.write(f'train: {self.pth_training_images}\n')
+            f.write(f'val: {self.pth_validation_images}\n\n')
+            # Write classes
+            f.write('names:\n') 
+            for key in self.train_classes:
+                f.write(f'  {key}: {self.train_classes[key]}\n') 
+            """
+            # Augentations in the config.yaml file are no longer accepted
+            f.write('\n') 
+            # Write augmentation list
+            f.write('augmentations:\n') 
+            f.write(f'  hsv_h: {self.aug_hsv_h}\n')
+            f.write(f'  hsv_s: {self.aug_hsv_s}\n')
+            f.write(f'  hsv_v: {self.aug_hsv_v}\n')
+            f.write(f'  degrees: {self.aug_degrees}\n')
+            f.write(f'  translate: {self.aug_translate}\n')
+            f.write(f'  scale: {self.aug_scale}\n')
+            f.write(f'  shear: {self.aug_shear}\n')
+            f.write(f'  perspective: {self.aug_perspective}\n')
+            f.write(f'  flipud: {self.aug_flipud}\n')
+            f.write(f'  fliplr: {self.aug_fliplr}\n')
+            f.write(f'  mosaic: {self.aug_mosaic}\n')
+            f.write(f'  mixup: {self.aug_mixup}\n')
+            f.write(f'  copy_paste: {self.aug_copy_paste}')
+            f.write('\n\n') 
+            # Write training hyperparameters list
+            f.write('hyperparameters:\n') 
+            f.write(f"  optimizer: '{self.hyp_optimizer}'\n")
+            f.write(f'  cos_lr: {self.hyp_cos_lr}\n')
+            f.write(f'  lr0: {self.hyp_lr0}\n')
+            f.write(f'  lrf: {self.hyp_lrf}\n')
+            f.write(f'  momentum: {self.hyp_momentum}\n')
+            f.write(f'  weight_decay: {self.hyp_weight_decay}\n')
+            f.write(f'  warmup_epochs: {self.hyp_warmup_epochs}\n')
+            f.write(f'  warmup_momentum: {self.hyp_warmup_momentum}\n')
+            f.write(f'  warmup_bias_lr: {self.hyp_warmup_bias_lr}\n')
+            f.write(f'  dropout: {self.hyp_dropout}\n')
+            """
 
     # Deletes the dataset.yaml file
     def delete_dataset_info(self):
@@ -152,8 +154,6 @@ class Train:
             data=self.pth_dataset_info, 
             pretrained=self.use_pretrained_model,
             imgsz=self.train_img_size,
-            epochs=self.num_epochs,
-            batch=self.batch_size,
             patience=self.patience,
             val=self.do_validation,
             verbose=self.verbose,
@@ -167,7 +167,34 @@ class Train:
             overlap_mask=self.overlap_mask,
             mask_ratio=self.mask_ratio,
             save=True,
-        )   
+            # Training hyperparameters
+            epochs=self.num_epochs,
+            batch=self.batch_size,
+            optimizer=self.hyp_optimizer,
+            cos_lr=self.hyp_cos_lr,
+            lr0=self.hyp_lr0,
+            lrf=self.hyp_lrf,
+            momentum=self.hyp_momentum,
+            weight_decay=self.hyp_weight_decay,
+            warmup_epochs=self.hyp_warmup_epochs,
+            warmup_momentum=self.hyp_warmup_momentum,
+            warmup_bias_lr=self.hyp_warmup_bias_lr,
+            dropout=self.hyp_dropout,
+            # Augmentation parameters
+            hsv_h=self.aug_hsv_h,
+            hsv_s=self.aug_hsv_s,
+            hsv_v=self.aug_hsv_v,
+            degrees=self.aug_degrees,
+            translate=self.aug_translate,
+            scale=self.aug_scale,
+            shear=self.aug_shear,
+            perspective=self.aug_perspective,
+            flipud=self.aug_flipud,
+            fliplr=self.aug_fliplr,
+            mosaic=self.aug_mosaic,
+            mixup=self.aug_mixup,
+            copy_paste=self.aug_copy_paste,
+        )
 
         # Delete dataset.yaml file after training
         # self.delete_dataset_info() 
