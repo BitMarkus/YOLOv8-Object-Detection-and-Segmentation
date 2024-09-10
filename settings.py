@@ -189,7 +189,7 @@ setting = {
     # Name of the result file
     "od_export_file_name": 'results.txt',
     # Save bounding box results from predictions as txt file
-    "od_save_bb_results": False,
+    "od_save_bb_results": True,
 
     ### DETECTION FOR VIDEOS ###
     # Show predicted output video
@@ -330,6 +330,7 @@ setting = {
     "pth_training_images": "train/images/train/",
     "pth_validation_images": "train/images/val/",
     "pth_training_labels": "train/labels/train/",
-    "pth_validation_labels": "train/labels/val/",   
-
+    "pth_validation_labels": "train/labels/val/",
+    "pth_batch_test": "D:/AI/Zilien Projekt Bilder/Trainings/",       
+    # "pth_batch_test": "output/",
 }

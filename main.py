@@ -3,6 +3,7 @@ from train import Train
 from video import VideoOD
 from image import ImageOD
 from screen import ScreenOD
+from batch_test import Batch_Pred
 import functions as fcn
 from settings import setting
 
@@ -32,8 +33,10 @@ def main():
         print("  7) Object Detection")
         print("  8) Object Segmentation")
         print("  9) Object Tracking")
+        print(">> TOOLS:")
+        print("  10) Batch Testing Detection Models")
         print(">> PROGRAM:")
-        print("  10) Exit Program")
+        print("  11) Exit Program")
         menu1 = int(fcn.input_int("Please choose: "))
 
         #################
@@ -119,11 +122,20 @@ def main():
             od_video = ScreenOD('track')
             od_video()
 
+        #########
+        # Tools #  
+        #########
+
+        elif(menu1 == 10):      
+            print("\n:BATCH TESTING OF MODELS:") 
+            batch_pred = Batch_Pred()
+            batch_pred()
+
         ################
         # Exit Program #  
         ################      
 
-        elif(menu1 == 10):
+        elif(menu1 == 11):
             print("\nExit program...")
             break
         

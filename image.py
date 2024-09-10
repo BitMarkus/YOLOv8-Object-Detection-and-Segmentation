@@ -149,14 +149,16 @@ class ImageOD():
     # and match txt file name with image name
     def generate_labels(self, image_name):
         # Move labels file from temp folder to output folder
-        src = f"{self.pth_image_output}/tmp/labels/image0.txt"
-        shutil.move(src, self.pth_image_output)
+        src = f"{self.pth_image_output}tmp/labels/image0.txt"
+        # Check, if the file exists
+        if(os.path.exists(src)):
+            shutil.move(src, self.pth_image_output)
+            # Rename txt file to match image name
+            os.rename(f"{self.pth_image_output}image0.txt", f"{self.pth_image_output}/{image_name}.txt")
         # Delete tmp folder
         # https://sentry.io/answers/delete-a-file-or-folder-in-python/
-        src = f"{self.pth_image_output}/tmp/"
+        src = f"{self.pth_image_output}tmp/"
         shutil.rmtree(src)
-        # Rename txt file to match image name
-        os.rename(f"{self.pth_image_output}/image0.txt", f"{self.pth_image_output}/{image_name}.txt")
 
     #############################################################################################################
     # CALL:
