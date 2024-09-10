@@ -23,7 +23,7 @@ setting = {
     # Training parameters
     # https://docs.ultralytics.com/usage/cfg/#train-settings
     # Total number of training epochs. Each epoch represents a full pass over the entire dataset
-    "train_num_epochs": 8000,
+    "train_num_epochs": 5000,
     # Batch size, with three modes: set as an integer (e.g., batch=16), auto mode for 60% GPU memory 
     # utilization (batch=-1), or auto mode with specified utilization fraction (batch=0.70)
     "train_batch_size": 4, # 2- for 2048 and x, 6 for 1024 and x, 8+ for 1024 and m, 15+ for 1024 and n
@@ -143,7 +143,7 @@ setting = {
     # Size of the pretrained model (n, s, m, l, x)
     "od_pretrained_model_size": "m",
     # Name of custom model, in case 'od_use_pretrained_model' is set to False
-    "od_custom_model_name": "PC_8000e_m_ds3_2048px_best.pt",
+    "od_custom_model_name": "PC_5000e_m_ds3_2048px_best.pt",
 
     # https://docs.ultralytics.com/usage/cfg/#predict-settings
     # Filters predictions to a set of class IDs. Only detections belonging to the specified classes will be returned
@@ -188,6 +188,8 @@ setting = {
     "od_export_results": True,
     # Name of the result file
     "od_export_file_name": 'results.txt',
+    # Save bounding box results from predictions as txt file
+    "od_save_bb_results": False,
 
     ### DETECTION FOR VIDEOS ###
     # Show predicted output video

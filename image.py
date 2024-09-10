@@ -5,6 +5,7 @@
 import cv2
 from PIL import Image
 import os
+import shutil
 # Own modules
 from detection import Detect
 from model import ModelOD
@@ -52,6 +53,8 @@ class ImageOD():
         self.min_conf = setting["od_min_conf"]
         # Load model and class names
         self.mdl = ModelOD()
+        # Save bounding box results from predictions as txt file
+        self.save_bb_results = setting["od_save_bb_results"]
 
         # Modes
         # Object detection
@@ -94,56 +97,66 @@ class ImageOD():
 
     # Create a text file for saving detection results
     def save_result_file(self, results):
+
         # This mode opens the file for writing only. The data in existing files are modified and overwritten
         # If the file does not already exist in the folder, a new one gets created
-        f = open(self.export_pth, "w")
+        with open(self.export_pth, "w") as f:
+            # Get forst index in result dict
+            first_idx = next(iter(results))
+            # Get number of images and classes
+            num_classes = len(results[first_idx])
+            # num_img = len(results)
 
-        # Get forst index in result dict
-        first_idx = next(iter(results))
-        # Get number of images and classes
-        num_classes = len(results[first_idx])
-        # num_img = len(results)
+            # Write hyperparameters for prediction
+            f.write("----------- PREDICTION PARAMETERS -----------\n")
+            f.write("\n")
+            f.write(f"Model name: {self.mdl.model_name}\n") 
+            f.write(f"Min conf: {self.min_conf}\n") 
+            f.write(f"IoU: {self.iou}\n")
+            f.write("\n") 
 
-        # Write hyperparameters for prediction
-        f.write("----------- PREDICTION PARAMETERS -----------\n")
-        f.write("\n")
-        f.write(f"Model name: {self.mdl.model_name}\n") 
-        f.write(f"Min conf: {self.min_conf}\n") 
-        f.write(f"IoU: {self.iou}\n")
-        f.write("\n") 
-
-        # Write detections table
-        f.write("----------- DETECTIONS -----------\n")
-        f.write("\n")
-        # Write header
-        f.write("Image name, ") 
-        # Iterate over classes = first entry in dict results
-        # Get first index in dict
-        counter = 0 
-        for class_name in results[first_idx]:
-            f.write(f"Num {class_name}") 
-            counter += 1
-            if(counter < num_classes):
-               f.write(", ") 
-            else:
-               f.write(":\n")  
-
-        # Write table
-        for img in results:
-            # Image name
-            f.write(f"{img}, ")
-            # Number of detections per class
-            counter = 0
-            for class_name in results[img]:
-                f.write(f"{results[img][class_name]}")
+            # Write detections table
+            f.write("----------- DETECTIONS -----------\n")
+            f.write("\n")
+            # Write header
+            f.write("Image name, ") 
+            # Iterate over classes = first entry in dict results
+            # Get first index in dict
+            counter = 0 
+            for class_name in results[first_idx]:
+                f.write(f"Num {class_name}") 
                 counter += 1
                 if(counter < num_classes):
                     f.write(", ") 
                 else:
-                    f.write("\n")
-                       
-        # Close file
-        f.close()
+                    f.write(":\n")  
+
+            # Write table
+            for img in results:
+                # Image name
+                f.write(f"{img}, ")
+                # Number of detections per class
+                counter = 0
+                for class_name in results[img]:
+                    f.write(f"{results[img][class_name]}")
+                    counter += 1
+                    if(counter < num_classes):
+                        f.write(", ") 
+                    else:
+                        f.write("\n")                     
+
+    # Copy label output in output folder
+    # and match txt file name with image name
+    def generate_labels(self, image_name):
+        # Move labels file from temp folder to output folder
+        src = f"{self.pth_image_output}/tmp/labels/image0.txt"
+        shutil.move(src, self.pth_image_output)
+        # Delete tmp folder
+        # https://sentry.io/answers/delete-a-file-or-folder-in-python/
+        src = f"{self.pth_image_output}/tmp/"
+        shutil.rmtree(src)
+        # Rename txt file to match image name
+        os.rename(f"{self.pth_image_output}/image0.txt", f"{self.pth_image_output}/{image_name}.txt")
 
     #############################################################################################################
     # CALL:
@@ -167,8 +180,12 @@ class ImageOD():
                 # OBJECT DETECTION #
                 if(self.activate_object_detection):
                     img, result = self.detection(img)
-                    # Add resukts to class count dict
+                    # Add results to class count dict
                     results[image_name] = result
+
+                    # Copy label output in output folder
+                    if(self.save_bb_results):
+                        self.generate_labels(image_name)
 
                 # OBJECT SEGMENTATION #
                 if(self.activate_object_segmentation):

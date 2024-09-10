@@ -40,6 +40,10 @@ class Detect():
         self.max_detections = setting["od_max_detections"]  
         # Intersection Over Union (IoU) threshold
         self.iou = setting["od_iou"]  
+        # Path to training output
+        self.pth_training_output = setting["pth_output"]
+        # Save bounding box results from predictions as txt file
+        self.save_bb_results = setting["od_save_bb_results"]
 
         # Class counter object
         self.show_class_counter = setting["od_show_class_counter"]
@@ -66,8 +70,13 @@ class Detect():
 
     # Predict on images/frames
     # https://docs.ultralytics.com/modes/predict/
-    def predict(self, source):
+    def predict(self, source): 
         results = self.model.predict(
+            #################################
+            save_txt=self.save_bb_results,
+            project=self.pth_training_output,
+            name="tmp",
+            #################################
             source=source, 
             conf=self.min_conf,
             iou=self.iou,
@@ -77,7 +86,7 @@ class Detect():
             classes=self.od_class_list,
         )
         return results 
-    
+       
     # Read detections from image/frame
     def read_detections(self, result):
         return sv.Detections.from_ultralytics(result)
@@ -120,7 +129,6 @@ class Detect():
 
         return det_result
 
-    
     #############################################################################################################
     # CALL:
 

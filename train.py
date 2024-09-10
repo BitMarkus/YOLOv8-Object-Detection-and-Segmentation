@@ -101,6 +101,7 @@ class Train:
             f.write('names:\n') 
             for key in self.train_classes:
                 f.write(f'  {key}: {self.train_classes[key]}\n') 
+                
             """
             # Augentations in the config.yaml file are no longer accepted
             f.write('\n') 
