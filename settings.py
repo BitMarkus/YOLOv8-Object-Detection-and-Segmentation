@@ -17,8 +17,8 @@ setting = {
     # Name of the necessary train info located in folder /train
     "train_dataset_info_name": "config.yaml",
     # Dict of classes for automatic generation of dataset.yaml file
-    # "train_classes": {0: 'no cilium', 1: 'cilium', 2: 'nucleus', 3: 'mitosis'},
-    "train_classes": {0: 'PC'},
+    "train_classes": {0: 'no cilium', 1: 'cilium', 2: 'nucleus', 3: 'mitosis'},
+    # "train_classes": {0: 'PC'},
 
     # Training parameters
     # https://docs.ultralytics.com/usage/cfg/#train-settings
@@ -143,7 +143,7 @@ setting = {
     # Size of the pretrained model (n, s, m, l, x)
     "od_pretrained_model_size": "m",
     # Name of custom model, in case 'od_use_pretrained_model' is set to False
-    "od_custom_model_name": "PC_5000e_m_ds3_2048px_best.pt",
+    "od_custom_model_name": "cilia_3000e_ds9_2_m_2048px_best.pt",
 
     # https://docs.ultralytics.com/usage/cfg/#predict-settings
     # Filters predictions to a set of class IDs. Only detections belonging to the specified classes will be returned
@@ -177,7 +177,7 @@ setting = {
     # Press any key to close image
     "od_show_predicted_images": False, 
     # Set to true if predicted images are supposed to be saved 
-    "od_save_predicted_images": True, 
+    "od_save_predicted_images": False, 
     # Defines the image size for inference for images (w, h)
     "od_inf_size_img": (2048, 2048),    # (1024, 1024), (2048, 2048)
     # Set to true if images for prediction are rectangeled,
@@ -331,6 +331,9 @@ setting = {
     "pth_validation_images": "train/images/val/",
     "pth_training_labels": "train/labels/train/",
     "pth_validation_labels": "train/labels/val/",
-    "pth_batch_test": "D:/AI/Zilien Projekt Bilder/Trainings/",       
+    # This is NOT the path to checkpoints/models! 
+    # It is the absolute path to any folder containing training folders
+    "pth_batch_test": "C:/YOLO/train_files/",
+    # "pth_batch_test": "D:/AI/Zilien Projekt Bilder/Trainings/",       
     # "pth_batch_test": "output/",
 }

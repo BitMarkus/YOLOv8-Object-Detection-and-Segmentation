@@ -46,8 +46,6 @@ class ImageOD():
         self.export_results = setting["od_export_results"] 
         # Export results: file name
         self.export_file_name = setting["od_export_file_name"] 
-        # Export results: Path
-        self.export_pth = f"{self.pth_image_output}{self.export_file_name}"
         # Parameters for predictions (for result export)
         self.iou = setting["od_iou"]
         self.min_conf = setting["od_min_conf"]
@@ -79,11 +77,11 @@ class ImageOD():
         return img
 
     # Saves predicted images
-    def save_image(self, img, name, pth_output):
+    def save_image(self, img, name, output_pth):
         img = Image.fromarray(img[:,:,::-1]) # Change color to rgb
-        output_pth = f'{pth_output}{name}'
-        img.save(output_pth)
-        print(f'Image {name} was saved to folder {pth_output}.')
+        img_pth = f'{output_pth}{name}'
+        img.save(img_pth)
+        print(f'Image {name} was saved to folder {output_pth}.')
 
     # Displays the (predicted) image
     def show_image(self, img):
@@ -96,11 +94,12 @@ class ImageOD():
         cv2.destroyAllWindows()  
 
     # Create a text file for saving detection results
-    def save_result_file(self, results):
+    def save_result_file(self, results, output_pth):
 
         # This mode opens the file for writing only. The data in existing files are modified and overwritten
         # If the file does not already exist in the folder, a new one gets created
-        with open(self.export_pth, "w") as f:
+        file_pth = f"{output_pth}{self.export_file_name}"
+        with open(file_pth, "w") as f:
             # Get forst index in result dict
             first_idx = next(iter(results))
             # Get number of images and classes
@@ -145,16 +144,18 @@ class ImageOD():
                     else:
                         f.write("\n")                     
 
-    # Copy label output in output folder
+    # Copy label output in specified folder
     # and match txt file name with image name
-    def generate_labels(self, image_name):
+    def generate_labels(self, image_name, output_pth):
         # Move labels file from temp folder to output folder
         src = f"{self.pth_image_output}tmp/labels/image0.txt"
         # Check, if the file exists
         if(os.path.exists(src)):
-            shutil.move(src, self.pth_image_output)
+            shutil.move(src, output_pth)
+            # Remove extension from image name
+            image_name = os.path.splitext(image_name)[0]
             # Rename txt file to match image name
-            os.rename(f"{self.pth_image_output}image0.txt", f"{self.pth_image_output}/{image_name}.txt")
+            os.rename(f"{output_pth}image0.txt", f"{output_pth}/{image_name}.txt")
         # Delete tmp folder
         # https://sentry.io/answers/delete-a-file-or-folder-in-python/
         src = f"{self.pth_image_output}tmp/"
@@ -187,7 +188,7 @@ class ImageOD():
 
                     # Copy label output in output folder
                     if(self.save_bb_results):
-                        self.generate_labels(image_name)
+                        self.generate_labels(image_name, self.pth_image_output)
 
                 # OBJECT SEGMENTATION #
                 if(self.activate_object_segmentation):
@@ -203,7 +204,7 @@ class ImageOD():
 
             # Save results in a text file
             if(self.export_results):
-                self.save_result_file(results)
+                self.save_result_file(results, self.pth_image_output)
 
         # If there are no images in the prediction folder      
         else:
