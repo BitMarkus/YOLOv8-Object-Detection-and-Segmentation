@@ -232,7 +232,15 @@ class Img_Split():
                         train_bg_list = bg_list[:num_bg_train_img]
                         val_bg_list = bg_list[num_bg_train_img:num_bg_train_img+num_bg_val_img]
                         test_bg_list = bg_list[num_bg_train_img+num_bg_val_img:num_bg_all_img]
+                        num_bg_list = len(bg_list)
                     else:
+                        train_bg_list = False
+                        val_bg_list = False
+                        test_bg_list = False
+                        num_bg_list = 0
+
+                    if(num_bg_all_img > num_bg_list):
+                        print("Warning: Not enough background images! No background images will be added.")
                         train_bg_list = False
                         val_bg_list = False
                         test_bg_list = False

@@ -328,7 +328,7 @@ setting = {
     "split_is_val_split": True,
     "split_val_split": 0.2, # 0.0 - 1.0
     # Test split
-    "split_is_test_split": True,
+    "split_is_test_split": False,
     "split_test_split": 0.1, # 0.0 - 1.0
     # Background images
     "split_use_bg_img": True,
