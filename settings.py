@@ -320,10 +320,22 @@ setting = {
     # IMAGE SPLITTER #
     ##################
 
+    # Number of datasets to create
+    "split_num_datasets": 2,
+    # Extension of training images
     "split_img_extension": ".jpg",
-    "split_val_split": 0.2,
-    "split_test_split": 0.1,
-    "split_num_bg_img": 10,
+    # Validation split
+    "split_is_val_split": True,
+    "split_val_split": 0.2, # 0.0 - 1.0
+    # Test split
+    "split_is_test_split": True,
+    "split_test_split": 0.1, # 0.0 - 1.0
+    # Background images
+    "split_use_bg_img": True,
+    "split_use_bg_img_for_train": True,
+    "split_use_bg_img_for_val": True,
+    "split_use_bg_img_for_test": True,
+    "split_bg_split": 0.1, # 0.0 - 1.0
 
     #########
     # PATHS #

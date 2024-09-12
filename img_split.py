@@ -20,13 +20,30 @@ class Img_Split():
     def __init__(self):
 
         # Split settings
+        # Number of datasets to create
+        self.num_datasets = setting["split_num_datasets"]
+        # Extension of training images
         self.img_extension = setting["split_img_extension"]
-        self.val_split = setting["split_val_split"]
-        self.test_split = setting["split_test_split"]
-        self.num_bg_img = setting["split_num_bg_img"]
+        # Validation split
+        self.is_val_split = setting["split_is_val_split"]
+        if(self.is_val_split):
+            self.val_split = setting["split_val_split"]
+        else:
+            self.val_split = 0.0
+        # Test split
+        self.is_test_split = setting["split_is_test_split"]
+        if(self.is_test_split):
+            self.test_split = setting["split_test_split"]
+        else:
+            self.test_split = 0.0
+        # Background images
+        self.use_bg_img = setting["split_use_bg_img"]
+        self.use_bg_img_for_train = setting["split_use_bg_img_for_train"]
+        self.use_bg_img_for_val = setting["split_use_bg_img_for_val"]
+        self.use_bg_img_for_test = setting["split_use_bg_img_for_test"]
+        self.bg_split = setting["split_bg_split"]
 
         # Paths
-        self.num_bg_img = setting["split_num_bg_img"]
         # Input paths
         self.pth_splitin_data_img = setting["pth_splitin_data_img"]
         self.pth_splitin_data_label = setting["pth_splitin_data_label"]
@@ -141,68 +158,120 @@ class Img_Split():
         else:
             Path(ds_pth).mkdir(parents=True)
             Path(ds_pth + self.pth_splitout_images_train).mkdir(parents=True)
-            Path(ds_pth + self.pth_splitout_images_val).mkdir(parents=True)
-            Path(ds_pth + self.pth_splitout_images_test).mkdir(parents=True)
             Path(ds_pth + self.pth_splitout_labels_train).mkdir(parents=True)
-            Path(ds_pth + self.pth_splitout_labels_val).mkdir(parents=True)
-            Path(ds_pth + self.pth_splitout_labels_test).mkdir(parents=True)           
+            if(self.is_val_split):
+                Path(ds_pth + self.pth_splitout_images_val).mkdir(parents=True)
+                Path(ds_pth + self.pth_splitout_labels_val).mkdir(parents=True)
+            if(self.is_test_split):
+                Path(ds_pth + self.pth_splitout_images_test).mkdir(parents=True)
+                Path(ds_pth + self.pth_splitout_labels_test).mkdir(parents=True)           
 
     #############################################################################################################
     # CALL:
 
     def __call__(self):
 
-        # Generate random shuffle seeds for as much datasets as requested
-        num_ds = input("Number of datasets to generate: ")
-        seed_list = []
-        for _ in range(int(num_ds)):
-            seed_list.append(randint(1, 1000))
-        # print(seed_list)
+        # Generate random shuffle seeds (1-1000) for max 999 datasets
+        seed_list = [randint(1, 1000) for s in range(self.num_datasets)]
 
-        print("Generate datasets. Please wait...")
+        print(f"Generate {self.num_datasets} datasets. Please wait...")
+
         # Iterate over shuffle seeds
         for seed in seed_list: 
 
-            # Generate directory with sub directories for dataset
-            # Name of the dataset is the random shuffle seed
-            ds_pth = f"{self.pth_splitout}dataset_{seed}/"
-            print(f"> Generate dataset {seed}...")
-
-            # Create dataset folder
-            self.create_dataset_folders(ds_pth)
-
-            # Load a list of all image names in the data folder
+            # Load a list of all image names in the data folder and shuffle it
             img_list = self.load_img_list(self.pth_splitin_data_img, self.img_extension, seed)
+            if(img_list):
 
-            # Choose randomly x% of all images and move them to another list (validation images)
-            val_list, test_list, train_list = self.split_list_perc(img_list, self.val_split, self.test_split)   
-            # print(train_list)     
-            # print(val_list)      
-            # print(test_list)   
+                print(f"\n> Generate dataset {seed}...")
 
-            # Make a list of all image names in the background folder and choose randomly x images
-            # https://github.com/ultralytics/yolov5/issues/2844
-            # An image without a label and an image with an empty label are both considered background images
-            bg_list = self.load_img_list(self.pth_splitin_bg_img, self.img_extension, seed)
-            bg_list = self.split_list_idx(bg_list, self.num_bg_img)
-            # print(bg_list)
+                # Generate directory with sub directories for dataset
+                # Name of the dataset is the random shuffle seed
+                ds_pth = f"{self.pth_splitout}dataset_{seed}/"
+                # Create dataset folder
+                self.create_dataset_folders(ds_pth)
 
-            # Copy images and labels from pos and neg lists to their respective train folders
-            # Background images are only copied to the training images 
-            # and not to the validation and test images in this iteration
-            self.copy_img(train_list, self.pth_splitin_data_img, ds_pth+self.pth_splitout_images_train)
-            self.copy_img(bg_list, self.pth_splitin_bg_img, ds_pth+self.pth_splitout_images_train)
-            self.copy_label(train_list, self.pth_splitin_data_label, ds_pth+self.pth_splitout_labels_train)
-            self.copy_label(bg_list, self.pth_splitin_bg_label, ds_pth+self.pth_splitout_labels_train)
+                # Choose randomly x% of all images and move them to another list (validation images)
+                val_list, test_list, train_list = self.split_list_perc(img_list, self.val_split, self.test_split)   
+                print(f"Number of images: train={len(train_list)}, val={len(val_list)}, test={len(test_list)}") 
+                
+                # Make a list of all image names in the background folder and choose randomly x images
+                # https://github.com/ultralytics/yolov5/issues/2844
+                # An image without a label and an image with an empty label are both considered background images
+                # Here, background images have empty label txt files
+                if(self.use_bg_img):
 
-            # Copy images and labels from validation list to their respective validation folders
-            self.copy_img(val_list, self.pth_splitin_data_img, ds_pth+self.pth_splitout_images_val)
-            self.copy_label(val_list, self.pth_splitin_data_label, ds_pth+self.pth_splitout_labels_val)
-        
-            # Copy images and labels from test list to their respective test folders
-            self.copy_img(test_list, self.pth_splitin_data_img, ds_pth+self.pth_splitout_images_test)
-            self.copy_label(test_list, self.pth_splitin_data_label, ds_pth+self.pth_splitout_labels_test)
+                    # Calculate number of background images for each list
+                    # Training images
+                    num_bg_train_img = 0
+                    if(self.use_bg_img_for_train):
+                        num_train_img = len(train_list)
+                        if(num_train_img > 0):
+                            num_bg_train_img = round(num_train_img * self.bg_split)
+                    # Validation images
+                    num_bg_val_img = 0
+                    if(self.is_val_split and self.use_bg_img_for_val):
+                        num_val_img = len(val_list)
+                        if(num_val_img > 0):
+                            num_bg_val_img = round(num_val_img * self.bg_split)                            
+                    # Test images
+                    num_bg_test_img = 0
+                    if(self.is_test_split and self.use_bg_img_for_test):
+                        num_test_img = len(test_list)
+                        if(num_test_img > 0):
+                            num_bg_test_img = round(num_test_img * self.bg_split)
 
-            print(f"Dataset {seed} was saved in folder {ds_pth}.")
+                    # Calculate the total amount of background images
+                    num_bg_all_img =  num_bg_train_img + num_bg_val_img + num_bg_test_img   
+                    print(f"Number of bg images: train={num_bg_train_img}, val={num_bg_val_img}, test={num_bg_test_img}")                      
 
-        print("Datasets were successfully created.")
+                    # Load all background images into a list
+                    bg_list = self.load_img_list(self.pth_splitin_bg_img, self.img_extension, seed)
+                    if(bg_list):
+                        # Split the list
+                        train_bg_list = bg_list[:num_bg_train_img]
+                        val_bg_list = bg_list[num_bg_train_img:num_bg_train_img+num_bg_val_img]
+                        test_bg_list = bg_list[num_bg_train_img+num_bg_val_img:num_bg_all_img]
+                    else:
+                        train_bg_list = False
+                        val_bg_list = False
+                        test_bg_list = False
+                    
+                    # print(bg_list_train)
+                    # print(bg_list_val)
+                    # print(bg_list_test)
+
+                # Copy images and labels from data and background lists to their respective output folders
+                # Training images and labels
+                self.copy_img(train_list, self.pth_splitin_data_img, ds_pth+self.pth_splitout_images_train)
+                self.copy_label(train_list, self.pth_splitin_data_label, ds_pth+self.pth_splitout_labels_train)
+                # Background
+                if(self.use_bg_img and self.use_bg_img_for_train and train_bg_list):
+                    self.copy_img(train_bg_list, self.pth_splitin_bg_img, ds_pth+self.pth_splitout_images_train)
+                    self.copy_label(train_bg_list, self.pth_splitin_bg_label, ds_pth+self.pth_splitout_labels_train)
+
+                # Validation images and labels
+                if(self.is_val_split):
+                    self.copy_img(val_list, self.pth_splitin_data_img, ds_pth+self.pth_splitout_images_val)
+                    self.copy_label(val_list, self.pth_splitin_data_label, ds_pth+self.pth_splitout_labels_val)
+                    # Background
+                    if(self.use_bg_img and self.use_bg_img_for_val and val_bg_list):
+                        self.copy_img(val_bg_list, self.pth_splitin_bg_img, ds_pth+self.pth_splitout_images_val)
+                        self.copy_label(val_bg_list, self.pth_splitin_bg_label, ds_pth+self.pth_splitout_labels_val)
+
+                # Test images and labels
+                if(self.is_test_split):
+                    self.copy_img(test_list, self.pth_splitin_data_img, ds_pth+self.pth_splitout_images_test)
+                    self.copy_label(test_list, self.pth_splitin_data_label, ds_pth+self.pth_splitout_labels_test)
+                    # Background
+                    if(self.use_bg_img and self.use_bg_img_for_test and test_bg_list):
+                        self.copy_img(test_bg_list, self.pth_splitin_bg_img, ds_pth+self.pth_splitout_images_test)
+                        self.copy_label(test_bg_list, self.pth_splitin_bg_label, ds_pth+self.pth_splitout_labels_test)
+
+                print(f"Dataset {seed} was saved in folder {ds_pth}.")
+
+            # If there are no images at this path or if the path does not exist
+            else:
+                print(f"Path {self.pth_splitin_data_img} does not exist or there are no images inside!")
+
+        print("\nDatasets were successfully created.")
