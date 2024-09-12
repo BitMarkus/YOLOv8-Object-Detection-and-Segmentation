@@ -162,7 +162,7 @@ setting = {
 
     # Settings for bounding box annotations
     # Show labels AND confidence on top of the bounding boxes
-    "od_show_labels": True,
+    "od_show_labels": False,
     # Show bounding boxes
     "od_show_bbox": True,
     # Bounding box line thickness
@@ -316,6 +316,15 @@ setting = {
     # FPS display text thickness
     "fps_font_thickness": 1,
 
+    ##################
+    # IMAGE SPLITTER #
+    ##################
+
+    "split_img_extension": ".jpg",
+    "split_val_split": 0.2,
+    "split_test_split": 0.1,
+    "split_num_bg_img": 10,
+
     #########
     # PATHS #
     #########
@@ -331,9 +340,25 @@ setting = {
     "pth_validation_images": "train/images/val/",
     "pth_training_labels": "train/labels/train/",
     "pth_validation_labels": "train/labels/val/",
+
+    # Path for batch prediction on training folders
     # This is NOT the path to checkpoints/models! 
     # It is the absolute path to any folder containing training folders
-    "pth_batch_test": "C:/YOLO/train_files/",
-    # "pth_batch_test": "D:/AI/Zilien Projekt Bilder/Trainings/",       
-    # "pth_batch_test": "output/",
+    "pth_batch_test": "F:\Arbeit",
+    # "pth_batch_test": "D:/AI/Zilien Projekt Bilder/Trainings/",  
+
+    # Pthts for image splitter     
+    # Input paths
+    "pth_splitin_data_img": "img_splitter/input/data/images/",
+    "pth_splitin_data_label": "img_splitter/input/data/labels/",
+    "pth_splitin_bg_img": "img_splitter/input/background/images/",
+    "pth_splitin_bg_label": "img_splitter/input/background/labels/",
+    # Output paths
+    "pth_splitout": "img_splitter/output/",
+    "pth_splitout_images_train": "images/train/",
+    "pth_splitout_images_val": "images/val/",
+    "pth_splitout_images_test": "images/test/",
+    "pth_splitout_labels_train": "labels/train/",
+    "pth_splitout_labels_val": "labels/val/",
+    "pth_splitout_labels_test": "labels/test/",
 }

@@ -132,6 +132,14 @@ def create_prg_folders():
     Path(setting["pth_validation_images"]).mkdir(parents=True, exist_ok=True)
     Path(setting["pth_training_labels"]).mkdir(parents=True, exist_ok=True)
     Path(setting["pth_validation_labels"]).mkdir(parents=True, exist_ok=True)
+    # Folders for image splitter
+    # Input paths
+    Path(setting["pth_splitin_data_img"]).mkdir(parents=True, exist_ok=True)
+    Path(setting["pth_splitin_data_label"]).mkdir(parents=True, exist_ok=True)
+    Path(setting["pth_splitin_bg_img"]).mkdir(parents=True, exist_ok=True)
+    Path(setting["pth_splitin_bg_label"]).mkdir(parents=True, exist_ok=True)
+    # Output paths
+    Path(setting["pth_splitout"]).mkdir(parents=True, exist_ok=True)
 
 # Function to show if CUDA is working and software versions
 def show_cuda_and_versions():

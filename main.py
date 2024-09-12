@@ -4,6 +4,7 @@ from video import VideoOD
 from image import ImageOD
 from screen import ScreenOD
 from batch_test import Batch_Pred
+from img_split import Img_Split
 import functions as fcn
 from settings import setting
 
@@ -35,8 +36,9 @@ def main():
         print("  9) Object Tracking")
         print(">> TOOLS:")
         print("  10) Batch Testing Detection Models")
+        print("  11) Dataset Splitter")
         print(">> PROGRAM:")
-        print("  11) Exit Program")
+        print("  12) Exit Program")
         menu1 = int(fcn.input_int("Please choose: "))
 
         #################
@@ -131,11 +133,16 @@ def main():
             batch_pred = Batch_Pred()
             batch_pred()
 
+        elif(menu1 == 11):      
+            print("\n:DATASET SPLITTER:") 
+            img_split = Img_Split()
+            img_split()
+
         ################
         # Exit Program #  
         ################      
 
-        elif(menu1 == 11):
+        elif(menu1 == 12):
             print("\nExit program...")
             break
         
