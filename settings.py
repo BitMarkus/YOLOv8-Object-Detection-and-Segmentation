@@ -321,7 +321,7 @@ setting = {
     ##################
 
     # Number of datasets to create
-    "split_num_datasets": 2,
+    "split_num_datasets": 2, # 1 - 999
     # Extension of training images
     "split_img_extension": ".jpg",
     # Validation split
@@ -331,10 +331,14 @@ setting = {
     "split_is_test_split": False,
     "split_test_split": 0.1, # 0.0 - 1.0
     # Background images
+    # Use background images at all
     "split_use_bg_img": True,
+    # Use background images for specific splits
     "split_use_bg_img_for_train": True,
     "split_use_bg_img_for_val": True,
     "split_use_bg_img_for_test": True,
+    # Percent background images from train, val, and test split
+    # E.g. if there are 100 images in the train split, 0.1 means that 10 background images will be added
     "split_bg_split": 0.1, # 0.0 - 1.0
 
     #########
