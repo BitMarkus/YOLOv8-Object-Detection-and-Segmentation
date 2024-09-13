@@ -85,7 +85,7 @@ class ScreenOD(VideoOD):
                 """          
                 # OBJECT DETECTION #
                 if(self.activate_object_detection):
-                    frame = self.detection(frame)
+                    frame, _ = self.detection(frame)
                 """
                 # OBJECT SEGMENTATION #
                 if(self.activate_object_segmentation):
@@ -103,8 +103,6 @@ class ScreenOD(VideoOD):
                 # Save output video
                 if(self.save_output_video):
                     out.write(frame)
-
-                frame = (True, frame)
 
                 # Show frame with cv2
                 if(self.show_output_video):
