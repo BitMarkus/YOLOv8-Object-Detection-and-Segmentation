@@ -6,6 +6,7 @@ import mss
 from time import time
 import cv2
 import numpy as np
+from PIL import Image
 # Own modules
 from video import VideoOD
 from settings import setting
@@ -68,12 +69,24 @@ class ScreenOD(VideoOD):
                 # print(frame.shape)
                 if len(frame.shape) > 2 and frame.shape[2] == 4:
                     #convert the image from RGBA2RGB
-                    frame = cv2.cvtColor(frame, cv2.COLOR_BGRA2BGR)                
-
+                    frame = cv2.cvtColor(frame, cv2.COLOR_BGRA2RGB)
+                
+                """
+                # frame = frame.copy()
+                # pilImage = Image.fromarray(frame)
+                # pilImage = pilImage.convert("RGB") # remove alpha
+                # frame = np.array(pilImage)                             
+                
+                # https://stackoverflow.com/questions/74693281/what-is-the-color-space-produced-by-mss-sct-grab
+                screenshot = sct.grab(monitor)
+                frame = Image.frombytes('RGB', screenshot.size, screenshot.bgra, 'raw', 'BGRX')
+                frame = np.array(frame)
+                # frame = cv2.cvtColor(arr, cv2.COLOR_BGRA2RGB)
+                """          
                 # OBJECT DETECTION #
                 if(self.activate_object_detection):
                     frame = self.detection(frame)
-
+                """
                 # OBJECT SEGMENTATION #
                 if(self.activate_object_segmentation):
                     frame = self.segmentation(frame)
@@ -86,10 +99,12 @@ class ScreenOD(VideoOD):
                 if(self.show_fps_display):
                     end_time = time()
                     self.fps_display(frame, start_time, end_time)
-
+                """
                 # Save output video
                 if(self.save_output_video):
                     out.write(frame)
+
+                frame = (True, frame)
 
                 # Show frame with cv2
                 if(self.show_output_video):

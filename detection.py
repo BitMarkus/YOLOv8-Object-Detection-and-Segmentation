@@ -19,9 +19,13 @@ class Detect():
         if(mode == 'img'):
             self.inf_img_size = setting["od_inf_size_img"]
             self.rectangular = setting["od_rectangular_img"]
+            # Save bounding box results from predictions as txt file
+            # Only for images, not for videos
+            self.save_bb_results = setting["od_save_bb_results"]
         elif(mode == 'vid'):
             self.inf_img_size = setting["od_inf_size_vid"] 
             self.rectangular = setting["od_rectangular_video"]
+            self.save_bb_results = False
 
         # Load model and class names
         self.mdl = ModelOD()
@@ -42,8 +46,6 @@ class Detect():
         self.iou = setting["od_iou"]  
         # Path to training output
         self.pth_training_output = setting["pth_output"]
-        # Save bounding box results from predictions as txt file
-        self.save_bb_results = setting["od_save_bb_results"]
 
         # Class counter object
         self.show_class_counter = setting["od_show_class_counter"]
@@ -54,7 +56,7 @@ class Detect():
         self.show_labels = setting["od_show_labels"]
         self.show_bbox = setting["od_show_bbox"]
         # Object for box annotations
-        self.box_annotator = sv.BoundingBoxAnnotator(
+        self.box_annotator = sv.BoxAnnotator(
             color=sv.ColorPalette.DEFAULT, 
             thickness=setting["od_bbox_line_thickness"], 
         )   
@@ -71,20 +73,31 @@ class Detect():
     # Predict on images/frames
     # https://docs.ultralytics.com/modes/predict/
     def predict(self, source): 
-        results = self.model.predict(
-            #################################
-            save_txt=self.save_bb_results,
-            project=self.pth_training_output,
-            name="tmp",
-            #################################
-            source=source, 
-            conf=self.min_conf,
-            iou=self.iou,
-            imgsz=self.inf_img_size,
-            rect=self.rectangular,
-            max_det=self.max_detections,
-            classes=self.od_class_list,
-        )
+        if(self.save_bb_results):
+            results = self.model.predict(
+                #################################
+                save_txt=self.save_bb_results,
+                project=self.pth_training_output,
+                name="tmp",
+                #################################
+                source=source, 
+                conf=self.min_conf,
+                iou=self.iou,
+                imgsz=self.inf_img_size,
+                rect=self.rectangular,
+                max_det=self.max_detections,
+                classes=self.od_class_list,
+            )
+        else:
+            results = self.model.predict(
+                source=source, 
+                conf=self.min_conf,
+                iou=self.iou,
+                imgsz=self.inf_img_size,
+                rect=self.rectangular,
+                max_det=self.max_detections,
+                classes=self.od_class_list,
+            )
         return results 
        
     # Read detections from image/frame

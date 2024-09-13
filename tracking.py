@@ -40,16 +40,17 @@ class Track():
         self.counter = solutions.ObjectCounter(
             view_img=False,
             reg_pts=roi_count,
-            count_txt_color=setting["oc_text_color"],
-            count_bg_color=setting["oc_bg_color"],
-            classes_names=self.class_names,
+            names=self.class_names,
             view_in_counts=setting["oc_view_in_counts"],
             view_out_counts=setting["oc_view_out_counts"],
             draw_tracks=setting["oc_draw_tracks"],
-            track_thickness=setting["oc_track_thickness"],           
-            count_reg_color=setting["oc_box_color"],
-            region_thickness=setting["oc_box_line_thickness"],
             line_thickness=setting["oc_bboxes_line_thickness"],  
+            # Not supported anymore:
+            # track_thickness=setting["oc_track_thickness"],           
+            # count_reg_color=setting["oc_box_color"],
+            # region_thickness=setting["oc_box_line_thickness"],
+            # count_txt_color=setting["oc_text_color"],
+            # count_bg_color=setting["oc_bg_color"],
         )
 
     #############################################################################################################

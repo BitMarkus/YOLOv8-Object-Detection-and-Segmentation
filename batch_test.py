@@ -89,7 +89,7 @@ class Batch_Pred(ImageOD):
                                     img = self.load_image(image_name, self.pth_predictions)
 
                                     # Perform detection
-                                    img, result = self.detection(img)
+                                    img, result = self.detection(img, save_text=True)
                        
                                     # Add results to class count dict
                                     results[image_name] = result

@@ -50,8 +50,7 @@ class Segment(Detect):
             for mask in masks:
                 annotator.seg_bbox(
                     mask=mask, 
-                    mask_color=self.outline_color, # DOES NOTHING!
-                    det_label=None
+                    mask_color=self.outline_color,
                 )  
         return img     
 

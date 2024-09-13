@@ -13,11 +13,12 @@ setting = {
     # Can be a boolean value or a string path to a specific model from which to load weights
     "train_use_pretrained_model": False,
     # Size of the pretrained model (n, s, m, l, x)
-    "train_model_size": "m",
+    "train_model_size": "x",
     # Name of the necessary train info located in folder /train
     "train_dataset_info_name": "config.yaml",
     # Dict of classes for automatic generation of dataset.yaml file
-    "train_classes": {0: 'no cilium', 1: 'cilium', 2: 'nucleus', 3: 'mitosis'},
+    # "train_classes": {0: 'no cilium', 1: 'cilium', 2: 'nucleus', 3: 'mitosis'},
+    "train_classes": {0: '5-ring', 1: '6-ring', 2: '7-ring', 3: '8-ring', 4: 'unknown', 5: 'open'},
     # "train_classes": {0: 'PC'},
 
     # Training parameters
@@ -26,7 +27,7 @@ setting = {
     "train_num_epochs": 5000,
     # Batch size, with three modes: set as an integer (e.g., batch=16), auto mode for 60% GPU memory 
     # utilization (batch=-1), or auto mode with specified utilization fraction (batch=0.70)
-    "train_batch_size": 4, # 2- for 2048 and x, 6 for 1024 and x, 8+ for 1024 and m, 15+ for 1024 and n
+    "train_batch_size": 2, # 2- for 2048 and x, 6 for 1024 and x, 8+ for 1024 and m, 15+ for 1024 and n
     # Number of epochs to wait without improvement in validation metrics before early stopping the training.
     # 0 for no early stopping
     "train_patience": 0,
@@ -137,13 +138,13 @@ setting = {
 
     # Set to True if a pretrained yolov8 model is used
     # Set to False for a custom/self trained model
-    "od_use_pretrained_model": False,
+    "od_use_pretrained_model": True,
     # Set to True, if a segmentation model is used (ends with -seg.pt)
-    "od_use_segmentation_model": False,
+    "od_use_segmentation_model": True,
     # Size of the pretrained model (n, s, m, l, x)
     "od_pretrained_model_size": "m",
     # Name of custom model, in case 'od_use_pretrained_model' is set to False
-    "od_custom_model_name": "cilia_3000e_ds9_2_m_2048px_best.pt",
+    "od_custom_model_name": "PC_5000e_m_ds3_2048px_best.pt",
 
     # https://docs.ultralytics.com/usage/cfg/#predict-settings
     # Filters predictions to a set of class IDs. Only detections belonging to the specified classes will be returned
@@ -162,7 +163,7 @@ setting = {
 
     # Settings for bounding box annotations
     # Show labels AND confidence on top of the bounding boxes
-    "od_show_labels": False,
+    "od_show_labels": True,
     # Show bounding boxes
     "od_show_bbox": True,
     # Bounding box line thickness
@@ -177,7 +178,7 @@ setting = {
     # Press any key to close image
     "od_show_predicted_images": False, 
     # Set to true if predicted images are supposed to be saved 
-    "od_save_predicted_images": False, 
+    "od_save_predicted_images": True, 
     # Defines the image size for inference for images (w, h)
     "od_inf_size_img": (2048, 2048),    # (1024, 1024), (2048, 2048)
     # Set to true if images for prediction are rectangeled,
@@ -261,26 +262,28 @@ setting = {
     # List of classes to count, empy list = all classes
     "oc_class_selection": [],
     # Settings for bounding box annotations
-    # Counter box color
-    # In OpenCV BGR format -> red
-    "oc_box_color": (0, 0, 255),
-    # Counter box line thickness
-    "oc_box_line_thickness": 1,
     # Bounding boxes line thickness
     "oc_bboxes_line_thickness": 1,
-    # In/out display text color
-    # In OpenCV BGR format -> white
-    "oc_text_color": (255, 255, 255),
-    # In/out display background color
-    # In OpenCV BGR format -> black
-    "oc_bg_color": (0, 0, 0),
     # Set to true if object tracks are suppose to be shown
     "oc_draw_tracks": True,
-    # Line thickness of object tracks
-    "oc_track_thickness": 2,
     # Show in/out counts
     "oc_view_in_counts": True,
     "oc_view_out_counts": True,
+
+    # Not supported anymore:
+    # Counter box color
+    # In OpenCV BGR format -> red
+    # "oc_box_color": (0, 0, 255),
+    # Counter box line thickness
+    # "oc_box_line_thickness": 1,
+    # In/out display text color
+    # In OpenCV BGR format -> white
+    # "oc_text_color": (255, 255, 255),
+    # In/out display background color
+    # In OpenCV BGR format -> black
+    # "oc_bg_color": (0, 0, 0),
+    # Line thickness of object tracks
+    # "oc_track_thickness": 2,
 
     #################
     # CLASS COUNTER #

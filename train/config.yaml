@@ -3,4 +3,9 @@ train: train/images/train/
 val: train/images/val/
 
 names:
-  0: PC
+  0: 5-ring
+  1: 6-ring
+  2: 7-ring
+  3: 8-ring
+  4: unknown
+  5: open
