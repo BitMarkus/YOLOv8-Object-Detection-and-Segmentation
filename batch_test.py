@@ -1,3 +1,21 @@
+# Object Detection and Segmentation with Ultralytics YOLO
+# Copyright (C) 2024 Markus Reichold <reichold.markus@gmx.de>
+
+# This file is part of Object Detection and Segmentation with Ultralytics YOLO.
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU Affero General Public License for more details.
+
+# You should have received a copy of the GNU Affero General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+
 ########################################################
 # Batch testing of object detection models/checkpoints #
 ########################################################
@@ -7,6 +25,7 @@ from pathlib import Path
 # Own modules
 from model import ModelOD
 from image import ImageOD
+from detection import Detect
 from settings import setting
 
 class Batch_Pred(ImageOD):
@@ -57,7 +76,7 @@ class Batch_Pred(ImageOD):
                 # Iterate over folder list
                 for dir_name in dir_list:
                     # Check, if the training folder contains a folder called "weights"
-                    checkpoint_pth = f"{self.pth_batch_test}/{dir_name}/weights/"
+                    checkpoint_pth = f"{self.pth_batch_test}{dir_name}/weights/"
                     if(os.path.exists(checkpoint_pth)):
 
                         # Get a list of all checkpoints in the weights folder
@@ -72,7 +91,11 @@ class Batch_Pred(ImageOD):
                             for checkpoint in checkpoint_list:
 
                                 # Load checkpoint
-                                self.mdl = ModelOD(f"{checkpoint_pth}{checkpoint}")
+                                model_object = ModelOD(f"{checkpoint_pth}{checkpoint}")
+                                self.model_pth = model_object.model_pth
+
+                                # Object detection mode
+                                self.detection = Detect('img', model_object)
 
                                 # Create a directory with the checkpoint name
                                 checkpoint_dir = f"{result_dir}{os.path.splitext(checkpoint)[0]}/"
@@ -89,7 +112,7 @@ class Batch_Pred(ImageOD):
                                     img = self.load_image(image_name, self.pth_predictions)
 
                                     # Perform detection
-                                    img, result = self.detection(img, save_text=True)
+                                    img, result = self.detection(img)
                        
                                     # Add results to class count dict
                                     results[image_name] = result

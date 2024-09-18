@@ -1,3 +1,20 @@
+# Object Detection and Segmentation with Ultralytics YOLO
+# Copyright (C) 2024 Markus Reichold <reichold.markus@gmx.de>
+
+# This file is part of Object Detection and Segmentation with Ultralytics YOLO.
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU Affero General Public License for more details.
+
+# You should have received a copy of the GNU Affero General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 ####################
 # Program settings #
@@ -17,8 +34,8 @@ setting = {
     # Name of the necessary train info located in folder /train
     "train_dataset_info_name": "config.yaml",
     # Dict of classes for automatic generation of dataset.yaml file
-    # "train_classes": {0: 'no cilium', 1: 'cilium', 2: 'nucleus', 3: 'mitosis'},
-    "train_classes": {0: '5-ring', 1: '6-ring', 2: '7-ring', 3: '8-ring', 4: 'unknown', 5: 'open'},
+    "train_classes": {0: 'no cilium', 1: 'cilium', 2: 'nucleus', 3: 'mitosis'},
+    # "train_classes": {0: '5-ring', 1: '6-ring', 2: '7-ring', 3: '8-ring', 4: 'unknown', 5: 'open'},
     # "train_classes": {0: 'PC'},
 
     # Training parameters
@@ -144,7 +161,7 @@ setting = {
     # Size of the pretrained model (n, s, m, l, x)
     "od_pretrained_model_size": "m",
     # Name of custom model, in case 'od_use_pretrained_model' is set to False
-    "od_custom_model_name": "PC_5000e_m_ds3_2048px_best.pt",
+    "od_custom_model_name": "cilia_3000e_ds8_x_2048px_best.pt",
 
     # https://docs.ultralytics.com/usage/cfg/#predict-settings
     # Filters predictions to a set of class IDs. Only detections belonging to the specified classes will be returned
@@ -223,9 +240,9 @@ setting = {
     # Monitor selection for multi monitor setup
     "od_monitor_number": 2,
     # Offset of capture region from the left upper corner of the monitor
-    "od_capture_roi_offset_xy": (28, 208),
+    "od_capture_roi_offset_xy": (32, 227),
     # Width and height of the capture region
-    "od_capture_roi_size_wh": (1336, 752),
+    "od_capture_roi_size_wh": (1245, 696),
     # FPS for capture video recording
     "od_capture_roi_record_fps": 12,
 
@@ -324,18 +341,18 @@ setting = {
     ##################
 
     # Number of datasets to create
-    "split_num_datasets": 2, # 1 - 999
+    "split_num_datasets": 5, # 1 - 999
     # Extension of training images
     "split_img_extension": ".jpg",
     # Validation split
     "split_is_val_split": True,
-    "split_val_split": 0.2, # 0.0 - 1.0
+    "split_val_split": 0.1, # 0.0 - 1.0
     # Test split
-    "split_is_test_split": False,
-    "split_test_split": 0.1, # 0.0 - 1.0
+    "split_is_test_split": True,
+    "split_test_split": 0.2, # 0.0 - 1.0
     # Background images
     # Use background images at all
-    "split_use_bg_img": True,
+    "split_use_bg_img": False,
     # Use background images for specific splits
     "split_use_bg_img_for_train": True,
     "split_use_bg_img_for_val": True,
@@ -363,10 +380,9 @@ setting = {
     # Path for batch prediction on training folders
     # This is NOT the path to checkpoints/models! 
     # It is the absolute path to any folder containing training folders
-    "pth_batch_test": "F:\Arbeit",
-    # "pth_batch_test": "D:/AI/Zilien Projekt Bilder/Trainings/",  
+    "pth_batch_test": "D:/AI/Zilien Projekt Bilder/Trainings/",
 
-    # Pthts for image splitter     
+    # Paths for image splitter     
     # Input paths
     "pth_splitin_data_img": "img_splitter/input/data/images/",
     "pth_splitin_data_label": "img_splitter/input/data/labels/",

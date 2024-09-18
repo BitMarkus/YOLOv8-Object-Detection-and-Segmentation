@@ -1,3 +1,21 @@
+# Object Detection and Segmentation with Ultralytics YOLO
+# Copyright (C) 2024 Markus Reichold <reichold.markus@gmx.de>
+
+# This file is part of Object Detection and Segmentation with Ultralytics YOLO.
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU Affero General Public License for more details.
+
+# You should have received a copy of the GNU Affero General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+
 ###################################
 # Handling of videos, e.g. webcam #
 ###################################
@@ -7,6 +25,7 @@ import numpy as np
 from time import time
 # Own modules
 from detection import Detect
+from model import ModelOD
 from segmentation import Segment
 from tracking import Track
 from settings import setting
@@ -66,13 +85,16 @@ class VideoOD():
         self.fps_color = setting["fps_color"]
         self.fps_font_thickness = setting["fps_font_thickness"]
 
+        # Load model and class names for prediction
+        model_object = ModelOD()
+
         # Modes
         # Object detection
         if(self.activate_object_detection):
-            self.detection = Detect('vid')
+            self.detection = Detect('vid', model_object)
         # Object segmentation
         if(self.activate_object_segmentation):
-            self.segmentation = Segment('vid') 
+            self.segmentation = Segment('vid', model_object) 
         # Object tracking
         if(self.activate_object_tracking):
             self.tracker = Track()       

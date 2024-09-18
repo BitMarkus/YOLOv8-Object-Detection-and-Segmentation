@@ -1,3 +1,21 @@
+# Object Detection and Segmentation with Ultralytics YOLO
+# Copyright (C) 2024 Markus Reichold <reichold.markus@gmx.de>
+
+# This file is part of Object Detection and Segmentation with Ultralytics YOLO.
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU Affero General Public License for more details.
+
+# You should have received a copy of the GNU Affero General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+
 #######################
 # Object segmentation #
 #######################
@@ -14,8 +32,8 @@ class Segment(Detect):
     #############################################################################################################
     # CONSTRUCTOR:
 
-    def __init__(self, mode):
-        super().__init__(mode)
+    def __init__(self, mode, model_object):
+        super().__init__(mode, model_object)
 
         # Mode for images or videos
         # Important for setting inferance size for basis class
@@ -57,9 +75,9 @@ class Segment(Detect):
     #############################################################################################################
     # CALL:
 
-    def __call__(self, img):
+    def __call__(self, img, save_bb_txt=False):
         # Predict objects in image/frame
-        results = self.predict(img)  
+        results = self.predict(img, save_bb_txt)  
         # Read detections from image/frame
         detections = self.read_detections(results[0])
 

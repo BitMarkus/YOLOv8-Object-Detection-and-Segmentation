@@ -1,3 +1,20 @@
+# Object Detection and Segmentation with Ultralytics YOLO
+# Copyright (C) 2024 Markus Reichold <reichold.markus@gmx.de>
+
+# This file is part of Object Detection and Segmentation with Ultralytics YOLO.
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU Affero General Public License for more details.
+
+# You should have received a copy of the GNU Affero General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
 ####################
 # Object detection #
 ####################
@@ -13,24 +30,28 @@ class Detect():
     #############################################################################################################
     # CONSTRUCTOR:
 
-    def __init__(self, mode):
+    # Mode for images or videos
+    # If a path to a model is given, the settings in the settings file will be ignored
+    def __init__(self, mode, model_object):
+        
         # Modes for image and video detection
         # Image size for inference: It is more comfortable to have different values for images and videos
-        if(mode == 'img'):
+        self.mode = mode
+        if(self.mode == 'img'):
             self.inf_img_size = setting["od_inf_size_img"]
             self.rectangular = setting["od_rectangular_img"]
             # Save bounding box results from predictions as txt file
             # Only for images, not for videos
             self.save_bb_results = setting["od_save_bb_results"]
-        elif(mode == 'vid'):
+        elif(self.mode == 'vid'):
             self.inf_img_size = setting["od_inf_size_vid"] 
             self.rectangular = setting["od_rectangular_video"]
             self.save_bb_results = False
 
-        # Load model and class names
-        self.mdl = ModelOD()
-        self.model = self.mdl.model
-        self.class_names = self.mdl.class_names
+        # Load model
+        self.model_object = model_object
+        self.class_names = self.model_object.class_names
+        self.model = self.model_object.model
 
         # Prediction parameters
         # List of classes to detect, empy list = all classes
@@ -72,8 +93,8 @@ class Detect():
 
     # Predict on images/frames
     # https://docs.ultralytics.com/modes/predict/
-    def predict(self, source): 
-        if(self.save_bb_results):
+    def predict(self, source, save_bb_txt=False): 
+        if(save_bb_txt):
             results = self.model.predict(
                 #################################
                 save_txt=self.save_bb_results,
@@ -145,9 +166,10 @@ class Detect():
     #############################################################################################################
     # CALL:
 
-    def __call__(self, img):
+    def __call__(self, img, save_bb_txt=False):
+
         # Predict objects in image/frame
-        results = self.predict(img)  
+        results = self.predict(img, save_bb_txt)  
 
         result_dict = self.get_detection_result(results[0])
 
