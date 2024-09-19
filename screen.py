@@ -87,7 +87,7 @@ class ScreenOD(VideoOD):
                 # print(frame.shape)
                 if len(frame.shape) > 2 and frame.shape[2] == 4:
                     #convert the image from RGBA2RGB
-                    frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB) # COLOR_BGRA2RGB
+                    frame = cv2.cvtColor(frame, cv2.COLOR_BGRA2BGR) # COLOR_BGRA2RGB, COLOR_BGR2RGB            
      
                 # OBJECT DETECTION #
                 if(self.activate_object_detection):

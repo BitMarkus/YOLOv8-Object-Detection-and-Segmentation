@@ -155,7 +155,7 @@ setting = {
 
     # Set to True if a pretrained yolov8 model is used
     # Set to False for a custom/self trained model
-    "od_use_pretrained_model": True,
+    "od_use_pretrained_model": False,
     # Set to True, if a segmentation model is used (ends with -seg.pt)
     "od_use_segmentation_model": True,
     # Size of the pretrained model (n, s, m, l, x)
