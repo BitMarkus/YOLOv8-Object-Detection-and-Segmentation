@@ -194,6 +194,7 @@ class ImageOD():
 
         # Load images in prediction folder
         images = self.get_img_list(self.pth_predictions)
+        # print(images)
 
         # If there are any images in the folder
         if(len(images) > 0):
@@ -206,6 +207,7 @@ class ImageOD():
             for image_name in images:
                 # Load image
                 img = self.load_image(image_name, self.pth_predictions)
+                # print(img)
 
                 # OBJECT DETECTION #
                 if(self.activate_object_detection):

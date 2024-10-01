@@ -34,9 +34,9 @@ setting = {
     # Name of the necessary train info located in folder /train
     "train_dataset_info_name": "config.yaml",
     # Dict of classes for automatic generation of dataset.yaml file
-    "train_classes": {0: 'no cilium', 1: 'cilium', 2: 'nucleus', 3: 'mitosis'},
+    # "train_classes": {0: 'no cilium', 1: 'cilium', 2: 'nucleus', 3: 'mitosis'},
     # "train_classes": {0: '5-ring', 1: '6-ring', 2: '7-ring', 3: '8-ring', 4: 'unknown', 5: 'open'},
-    # "train_classes": {0: 'PC'},
+    "train_classes": {0: 'closed', 1: 'open'},
 
     # Training parameters
     # https://docs.ultralytics.com/usage/cfg/#train-settings
@@ -122,15 +122,18 @@ setting = {
     # Adjust the hue, saturation, and value of the image colors to introduce color variability
     # Adjusts the hue of the image by a fraction of the color wheel, introducing color variability. 
     # Helps the model generalize across different lighting conditions.
-    "aug_hsv_h": 0.0,  # 0.015
+    # Default = 0.015
+    "aug_hsv_h": 0.0,
     # Alters the saturation of the image by a fraction, affecting the intensity of colors. 
     # Useful for simulating different environmental conditions.
-    "aug_hsv_s": 0.0,   # 0.7
+    # Default = 0.7
+    "aug_hsv_s": 0.0,   
     # Modifies the value (brightness) of the image by a fraction, helping the model to perform 
     # well under various lighting conditions.
-    "aug_hsv_v": 0.0,   # 0.4
+    # Default = 0.4
+    "aug_hsv_v": 0.0,   
     # Rotate the image by a certain degree to simulate different orientations
-    "aug_degrees": 0.0, 
+    "aug_degrees": 180.0, 
     # Translate the image horizontally and vertically to simulate different positions
     "aug_translate": 0.1, 
     # Scale the image to simulate different sizes of objects
@@ -157,11 +160,11 @@ setting = {
     # Set to False for a custom/self trained model
     "od_use_pretrained_model": False,
     # Set to True, if a segmentation model is used (ends with -seg.pt)
-    "od_use_segmentation_model": True,
+    "od_use_segmentation_model": False,
     # Size of the pretrained model (n, s, m, l, x)
     "od_pretrained_model_size": "m",
     # Name of custom model, in case 'od_use_pretrained_model' is set to False
-    "od_custom_model_name": "cilia_3000e_ds8_x_2048px_best.pt",
+    "od_custom_model_name": "PC_5000e_x_ds5_1_2cl_2048px_best.pt",
 
     # https://docs.ultralytics.com/usage/cfg/#predict-settings
     # Filters predictions to a set of class IDs. Only detections belonging to the specified classes will be returned
@@ -195,7 +198,7 @@ setting = {
     # Press any key to close image
     "od_show_predicted_images": False, 
     # Set to true if predicted images are supposed to be saved 
-    "od_save_predicted_images": True, 
+    "od_save_predicted_images": False, 
     # Defines the image size for inference for images (w, h)
     "od_inf_size_img": (2048, 2048),    # (1024, 1024), (2048, 2048)
     # Set to true if images for prediction are rectangeled,
@@ -287,21 +290,6 @@ setting = {
     "oc_view_in_counts": True,
     "oc_view_out_counts": True,
 
-    # Not supported anymore:
-    # Counter box color
-    # In OpenCV BGR format -> red
-    # "oc_box_color": (0, 0, 255),
-    # Counter box line thickness
-    # "oc_box_line_thickness": 1,
-    # In/out display text color
-    # In OpenCV BGR format -> white
-    # "oc_text_color": (255, 255, 255),
-    # In/out display background color
-    # In OpenCV BGR format -> black
-    # "oc_bg_color": (0, 0, 0),
-    # Line thickness of object tracks
-    # "oc_track_thickness": 2,
-
     #################
     # CLASS COUNTER #
     #################
@@ -380,7 +368,7 @@ setting = {
     # Path for batch prediction on training folders
     # This is NOT the path to checkpoints/models! 
     # It is the absolute path to any folder containing training folders
-    "pth_batch_test": "D:/AI/Zilien Projekt Bilder/Trainings/",
+    "pth_batch_test": "C:/YOLO/PC_2cl/",
 
     # Paths for image splitter     
     # Input paths

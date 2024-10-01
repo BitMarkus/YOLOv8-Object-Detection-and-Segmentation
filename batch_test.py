@@ -71,7 +71,7 @@ class Batch_Pred(ImageOD):
             # Check if there are train folders in the batch folder
             dir_list = self.get_folder_list(self.pth_batch_test)
             if(len(dir_list) > 0):
-                print(f"There are {len(dir_list)} folders in {self.pth_predictions}.")
+                print(f"There are {len(dir_list)} folders in {self.pth_batch_test}.")
 
                 # Iterate over folder list
                 for dir_name in dir_list:
@@ -112,7 +112,7 @@ class Batch_Pred(ImageOD):
                                     img = self.load_image(image_name, self.pth_predictions)
 
                                     # Perform detection
-                                    img, result = self.detection(img)
+                                    img, result = self.detection(img, self.save_bb_txt)
                        
                                     # Add results to class count dict
                                     results[image_name] = result

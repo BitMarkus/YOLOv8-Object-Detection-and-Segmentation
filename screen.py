@@ -86,7 +86,7 @@ class ScreenOD(VideoOD):
                 frame = np.array(sct.grab(monitor))
                 # print(frame.shape)
                 if len(frame.shape) > 2 and frame.shape[2] == 4:
-                    #convert the image from RGBA2RGB
+                    # convert the image from BGRA2BGR
                     frame = cv2.cvtColor(frame, cv2.COLOR_BGRA2BGR) # COLOR_BGRA2RGB, COLOR_BGR2RGB            
      
                 # OBJECT DETECTION #
