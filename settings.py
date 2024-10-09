@@ -67,17 +67,17 @@ setting = {
     "train_chckpt_save_period": 500,
     # Weight of the box loss component in the loss function, influencing how much emphasis is 
     # placed on accurately predicting bounding box coordinates
-    # Standart: 7.5
+    # Default = 7.5
     "train_box_emph": 7.5,
     # Weight of the classification loss in the total loss function, affecting the importance 
     # of correct class prediction relative to other components
-    # Standart: 0.5
+    # Default = 0.5
     "train_class_emph": 0.5,
     # Segmentation training:
     # Determines whether segmentation masks should overlap during training, applicable in instance segmentation tasks.
     "train_overlap_mask": True,
     # Downsample ratio for segmentation masks, affecting the resolution of masks used during training.
-    # Standart: 4
+    # Default = 4
     "train_mask_ratio": 4,
 
     # Training hyperparameters
@@ -133,23 +133,31 @@ setting = {
     # Default = 0.4
     "aug_hsv_v": 0.0,   
     # Rotate the image by a certain degree to simulate different orientations
+    # Default = 0.0
     "aug_degrees": 180.0, 
     # Translate the image horizontally and vertically to simulate different positions
+    # Default = 0.1
     "aug_translate": 0.1, 
     # Scale the image to simulate different sizes of objects
     "aug_scale": 0.5,
     # Shear the image to simulate perspective changes
+    # Default = 0.0
     "aug_shear": 0.0,
     # Adjust the perspective of the image
+    # Default = 0.0
     "aug_perspective": 0.0,
     # Flip the image upside down or left to right
+    # Default = 0.0
     "aug_flipud": 0.5,  # flip up and down
     "aug_fliplr": 0.5,  # flip left and right
     # Combine four training images into one to simulate different contexts
+    # Default = 1.0
     "aug_mosaic": 1.0,
     # Overlay two images to create a single composite image
+    # Default = 0.0
     "aug_mixup": 0.0,
     # For segmentation tasks, copy objects from one image and paste them onto another
+    # Default = 0.0
     "aug_copy_paste": 0.0,
 
     ####################
@@ -198,7 +206,7 @@ setting = {
     # Press any key to close image
     "od_show_predicted_images": False, 
     # Set to true if predicted images are supposed to be saved 
-    "od_save_predicted_images": False, 
+    "od_save_predicted_images": True, 
     # Defines the image size for inference for images (w, h)
     "od_inf_size_img": (2048, 2048),    # (1024, 1024), (2048, 2048)
     # Set to true if images for prediction are rectangeled,
@@ -368,7 +376,7 @@ setting = {
     # Path for batch prediction on training folders
     # This is NOT the path to checkpoints/models! 
     # It is the absolute path to any folder containing training folders
-    "pth_batch_test": "C:/YOLO/PC_2cl/",
+    "pth_batch_test": "C:/YOLO/PC_6cl/",
 
     # Paths for image splitter     
     # Input paths
