@@ -23,6 +23,8 @@ from image import ImageOD
 from screen import ScreenOD
 from batch_test import Batch_Pred
 from img_split import Img_Split
+# import os
+# os.environ["KMP_DUPLICATE_LIB_OK"]="TRUE"
 import functions as fcn
 from settings import setting
 

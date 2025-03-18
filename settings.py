@@ -36,7 +36,9 @@ setting = {
     # Dict of classes for automatic generation of dataset.yaml file
     # "train_classes": {0: 'no cilium', 1: 'cilium', 2: 'nucleus', 3: 'mitosis'},
     # "train_classes": {0: '5-ring', 1: '6-ring', 2: '7-ring', 3: '8-ring', 4: 'unknown', 5: 'open'},
-    "train_classes": {0: 'closed', 1: 'open'},
+    # "train_classes": {0: 'closed', 1: 'open'},
+    # "train_classes": {0: '5-ring', 1: '6-ring', 2: '7-ring', 3: '8-ring', 4: 'unknown', 5: 'open', 6: 'ka', 7: 'border'},
+    "train_classes": {0: 'centrosomes', 1: 'cilium', 2: 'nucleus', 3: 'mitosis'},
 
     # Training parameters
     # https://docs.ultralytics.com/usage/cfg/#train-settings
@@ -123,23 +125,24 @@ setting = {
     # Adjusts the hue of the image by a fraction of the color wheel, introducing color variability. 
     # Helps the model generalize across different lighting conditions.
     # Default = 0.015
-    "aug_hsv_h": 0.0,
+    "aug_hsv_h": 0.015,
     # Alters the saturation of the image by a fraction, affecting the intensity of colors. 
     # Useful for simulating different environmental conditions.
     # Default = 0.7
-    "aug_hsv_s": 0.0,   
+    "aug_hsv_s": 0.7,   
     # Modifies the value (brightness) of the image by a fraction, helping the model to perform 
     # well under various lighting conditions.
     # Default = 0.4
-    "aug_hsv_v": 0.0,   
+    "aug_hsv_v": 0.4,   
     # Rotate the image by a certain degree to simulate different orientations
     # Default = 0.0
-    "aug_degrees": 180.0, 
+    "aug_degrees": 0.0, 
     # Translate the image horizontally and vertically to simulate different positions
     # Default = 0.1
     "aug_translate": 0.1, 
     # Scale the image to simulate different sizes of objects
-    "aug_scale": 0.5,
+    # Default = 0.5
+    "aug_scale": 0.1,
     # Shear the image to simulate perspective changes
     # Default = 0.0
     "aug_shear": 0.0,
@@ -172,7 +175,7 @@ setting = {
     # Size of the pretrained model (n, s, m, l, x)
     "od_pretrained_model_size": "m",
     # Name of custom model, in case 'od_use_pretrained_model' is set to False
-    "od_custom_model_name": "PC_5000e_x_ds5_1_2cl_2048px_best.pt",
+    "od_custom_model_name": "PC_2048_5000e_x_ds7_3_7cl_seed4_border_class_best.pt",
 
     # https://docs.ultralytics.com/usage/cfg/#predict-settings
     # Filters predictions to a set of class IDs. Only detections belonging to the specified classes will be returned
@@ -183,11 +186,15 @@ setting = {
     "od_max_detections": 500,
     # Intersection Over Union (IoU) threshold: 
     # Lower values result in fewer detections by eliminating overlapping boxes, 
-    # useful for reducing duplicates (default 0.7)
+    # useful for reducing duplicates 
+    # Default: 0.7
     "od_iou": 0.6,
     # Sets the minimum confidence threshold for detections. Objects detected with confidence below 
     # this threshold will be disregarded
+    # Default: 0.4
     "od_min_conf": 0.4,
+    # agnostic_nms: avoid duplicate detections when you have overlapping objects of different classes
+    "od_agnostic_nms": True, 
 
     # Settings for bounding box annotations
     # Show labels AND confidence on top of the bounding boxes
@@ -337,14 +344,14 @@ setting = {
     ##################
 
     # Number of datasets to create
-    "split_num_datasets": 5, # 1 - 999
+    "split_num_datasets": 3, # 1 - 999
     # Extension of training images
     "split_img_extension": ".jpg",
     # Validation split
     "split_is_val_split": True,
     "split_val_split": 0.1, # 0.0 - 1.0
     # Test split
-    "split_is_test_split": True,
+    "split_is_test_split": False,
     "split_test_split": 0.2, # 0.0 - 1.0
     # Background images
     # Use background images at all
@@ -376,7 +383,7 @@ setting = {
     # Path for batch prediction on training folders
     # This is NOT the path to checkpoints/models! 
     # It is the absolute path to any folder containing training folders
-    "pth_batch_test": "C:/YOLO/PC_6cl/",
+    "pth_batch_test": "C:/YOLO/Batch_Test/",
 
     # Paths for image splitter     
     # Input paths

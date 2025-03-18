@@ -65,6 +65,8 @@ class Detect():
         self.max_detections = setting["od_max_detections"]  
         # Intersection Over Union (IoU) threshold
         self.iou = setting["od_iou"]  
+        # agnostic_nms: Avoid duplicate bounding boxes for the same object
+        self.agnostic_nms = setting["od_agnostic_nms"]  
         # Path to training output
         self.pth_training_output = setting["pth_output"]
 
@@ -101,7 +103,8 @@ class Detect():
                 project=self.pth_training_output,
                 name="tmp",
                 #################################
-                source=source, 
+                source=source,
+                agnostic_nms=self.agnostic_nms,
                 conf=self.min_conf,
                 iou=self.iou,
                 imgsz=self.inf_img_size,
@@ -111,7 +114,8 @@ class Detect():
             )
         else:
             results = self.model.predict(
-                source=source, 
+                source=source,
+                agnostic_nms=self.agnostic_nms, 
                 conf=self.min_conf,
                 iou=self.iou,
                 imgsz=self.inf_img_size,
