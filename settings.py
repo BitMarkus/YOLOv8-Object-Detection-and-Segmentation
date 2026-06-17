@@ -28,9 +28,9 @@ setting = {
 
     # Determines whether to start training from a pretrained model. 
     # Can be a boolean value or a string path to a specific model from which to load weights
-    "train_use_pretrained_model": False,
+    "train_use_pretrained_model": True,
     # Size of the pretrained model (n, s, m, l, x)
-    "train_model_size": "x",
+    "train_model_size": "m",
     # Name of the necessary train info located in folder /train
     "train_dataset_info_name": "config.yaml",
     # Dict of classes for automatic generation of dataset.yaml file
@@ -38,22 +38,23 @@ setting = {
     # "train_classes": {0: '5-ring', 1: '6-ring', 2: '7-ring', 3: '8-ring', 4: 'unknown', 5: 'open'},
     # "train_classes": {0: 'closed', 1: 'open'},
     # "train_classes": {0: '5-ring', 1: '6-ring', 2: '7-ring', 3: '8-ring', 4: 'unknown', 5: 'open', 6: 'ka', 7: 'border'},
-    "train_classes": {0: 'centrosomes', 1: 'cilium', 2: 'nucleus', 3: 'mitosis'},
+    # "train_classes": {0: 'centrosomes', 1: 'cilium', 2: 'nucleus', 3: 'mitosis'},
+    "train_classes": {0: 'filopodia',},
 
     # Training parameters
     # https://docs.ultralytics.com/usage/cfg/#train-settings
     # Total number of training epochs. Each epoch represents a full pass over the entire dataset
-    "train_num_epochs": 5000,
+    "train_num_epochs": 2000,
     # Batch size, with three modes: set as an integer (e.g., batch=16), auto mode for 60% GPU memory 
     # utilization (batch=-1), or auto mode with specified utilization fraction (batch=0.70)
-    "train_batch_size": 2, # 2- for 2048 and x, 6 for 1024 and x, 8+ for 1024 and m, 15+ for 1024 and n
+    "train_batch_size": 50, # 2- for 2048 and x, 6 for 1024 and x, 8+ for 1024 and m, 15+ for 1024 and n, 50+ for 512 and m
     # Number of epochs to wait without improvement in validation metrics before early stopping the training.
     # 0 for no early stopping
     "train_patience": 0,
     # Enables validation during training, allowing for periodic evaluation of model performance on a separate dataset
     "train_validation": True,
     # Target image size for training. All images are resized to this dimension before being fed into the model
-    "train_img_size": 2048,     # 2048, 1024
+    "train_img_size": 512,     # 2048, 1024
     # Enables rectangular training, optimizing batch composition for minimal padding.
     # TRAINING WARNING: 'rect=True' is incompatible with DataLoader shuffle, setting shuffle=False 
     # Eventually remove this from training
@@ -66,7 +67,7 @@ setting = {
     # providing visual insights into model performance and learning progression
     "train_save_plots": True,
     # Frequency of saving model checkpoints, specified in epochs. A value of -1 disables this feature
-    "train_chckpt_save_period": 500,
+    "train_chckpt_save_period": 100,
     # Weight of the box loss component in the loss function, influencing how much emphasis is 
     # placed on accurately predicting bounding box coordinates
     # Default = 7.5
@@ -135,8 +136,9 @@ setting = {
     # Default = 0.4
     "aug_hsv_v": 0.4,   
     # Rotate the image by a certain degree to simulate different orientations
+    # e.g. 45°: Each image is rotated by a random angle between -45° and +45° with a 100% probability
     # Default = 0.0
-    "aug_degrees": 0.0, 
+    "aug_degrees": 10.0, 
     # Translate the image horizontally and vertically to simulate different positions
     # Default = 0.1
     "aug_translate": 0.1, 
@@ -175,7 +177,7 @@ setting = {
     # Size of the pretrained model (n, s, m, l, x)
     "od_pretrained_model_size": "m",
     # Name of custom model, in case 'od_use_pretrained_model' is set to False
-    "od_custom_model_name": "PC_2048_5000e_x_ds7_3_7cl_seed4_border_class_best.pt",
+    "od_custom_model_name": "filopodia_grayscale_4_best.pt",
 
     # https://docs.ultralytics.com/usage/cfg/#predict-settings
     # Filters predictions to a set of class IDs. Only detections belonging to the specified classes will be returned
@@ -188,7 +190,7 @@ setting = {
     # Lower values result in fewer detections by eliminating overlapping boxes, 
     # useful for reducing duplicates 
     # Default: 0.7
-    "od_iou": 0.6,
+    "od_iou": 0.8,
     # Sets the minimum confidence threshold for detections. Objects detected with confidence below 
     # this threshold will be disregarded
     # Default: 0.4
@@ -198,7 +200,7 @@ setting = {
 
     # Settings for bounding box annotations
     # Show labels AND confidence on top of the bounding boxes
-    "od_show_labels": True,
+    "od_show_labels": False,
     # Show bounding boxes
     "od_show_bbox": True,
     # Bounding box line thickness
@@ -215,7 +217,7 @@ setting = {
     # Set to true if predicted images are supposed to be saved 
     "od_save_predicted_images": True, 
     # Defines the image size for inference for images (w, h)
-    "od_inf_size_img": (2048, 2048),    # (1024, 1024), (2048, 2048)
+    "od_inf_size_img": (512, 512),    # (1024, 1024), (2048, 2048)
     # Set to true if images for prediction are rectangeled,
     # Set to false if images are squared
     "od_rectangular_img": False,
@@ -346,10 +348,10 @@ setting = {
     # Number of datasets to create
     "split_num_datasets": 3, # 1 - 999
     # Extension of training images
-    "split_img_extension": ".jpg",
+    "split_img_extension": ".png",
     # Validation split
     "split_is_val_split": True,
-    "split_val_split": 0.1, # 0.0 - 1.0
+    "split_val_split": 0.2, # 0.0 - 1.0
     # Test split
     "split_is_test_split": False,
     "split_test_split": 0.2, # 0.0 - 1.0
